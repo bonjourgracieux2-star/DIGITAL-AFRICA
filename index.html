@@ -1,176 +1,195 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07152e">
-<title>DIGITAL AFRICA</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#07152e;color:white}
-header{padding:22px 16px;background:#0c2040;border-bottom:2px solid #d6a83d;text-align:center}
-header h1{color:#e8bd54;margin:0;font-size:27px}
-header p{color:#ddd;font-size:13px}
-nav{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;padding:14px;background:#102747}
-nav a{color:white;text-decoration:none;font-size:14px}
-.hero{text-align:center;padding:55px 18px;background:linear-gradient(135deg,#102747,#07152e)}
-.hero h2{font-size:30px;color:#f2c75c}
-.hero p{color:#ddd;line-height:1.6}
-.btn{display:inline-block;background:#e4b743;color:#07152e;padding:13px 22px;border:0;border-radius:7px;font-weight:bold;text-decoration:none;cursor:pointer}
-section{padding:25px 16px}
-h2.section-title{color:#efc65d;text-align:center}
-.search{width:100%;padding:14px;border-radius:7px;border:1px solid #d6a83d;background:#102747;color:white;margin:10px 0}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px}
-.product{background:#102747;border:1px solid #32496a;border-radius:10px;padding:15px;text-align:center}
-.product .emoji{font-size:40px}
-.product h3{font-size:16px}
-.price{color:#f0c65d;font-weight:bold}
-.product button{background:#dcb343;border:0;padding:10px;border-radius:5px;font-weight:bold;cursor:pointer}
-.panel{background:#102747;margin:15px 0;padding:20px;border-radius:10px}
-input,select,textarea{width:100%;padding:12px;margin:7px 0;border-radius:6px;border:1px solid #aaa;background:#f8f8f8;color:#111}
-footer{text-align:center;padding:25px;background:#0c2040;color:#ccc;font-size:13px}
-.small{color:#bbb;font-size:12px;line-height:1.5}
-</style>
-</head><link rel="manifest" href="./manifest.webmanifest">
-<body><script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js")
-      .catch(error => console.error("Service Worker:", error));
-  });
-}
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07152e">
+  <meta name="description" content="DIGITAL AFRICA, la marketplace numérique de l'Afrique.">
+  <title>DIGITAL AFRICA — Marketplace numérique</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <style>
+    :root{--navy:#07152e;--navy2:#0c2040;--panel:#102747;--gold:#e8bd54;--gold2:#d6a83d;--white:#fff;--muted:#c6d0df;--line:#31496a}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--navy);color:var(--white);line-height:1.55}
+    a{color:inherit}
+    header{padding:24px 16px 18px;text-align:center;background:var(--navy2);border-bottom:2px solid var(--gold2)}
+    header h1{margin:0;color:var(--gold);font-size:clamp(25px,5vw,34px);letter-spacing:1px}
+    header p{margin:6px 0 0;color:var(--muted);font-size:14px}
+    nav{display:flex;justify-content:center;gap:10px 22px;flex-wrap:wrap;padding:14px 12px;background:#102747;position:sticky;top:0;z-index:5}
+    nav a{text-decoration:none;font-size:14px;font-weight:700}
+    nav a:hover{color:var(--gold)}
+    .hero{padding:58px 18px;text-align:center;background:radial-gradient(ellipse at top,#18385f 0%,#0b1d38 55%,var(--navy) 100%)}
+    .hero h2{margin:0 0 12px;color:var(--gold);font-size:clamp(27px,6vw,40px);line-height:1.2}
+    .hero p{max-width:720px;margin:9px auto;color:var(--muted)}
+    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:23px}
+    .btn{display:inline-block;border:0;border-radius:8px;padding:12px 19px;background:var(--gold);color:var(--navy);font-weight:700;text-decoration:none;cursor:pointer}
+    .btn:hover{filter:brightness(1.07)}
+    .btn.secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+    section{max-width:1100px;margin:auto;padding:34px 16px}
+    .section-title{text-align:center;color:var(--gold);font-size:25px;margin:0 0 8px}
+    .section-intro{text-align:center;color:var(--muted);margin:0 auto 22px;max-width:720px}
+    .search{width:100%;max-width:650px;display:block;margin:18px auto;padding:13px 14px;border-radius:8px;border:1px solid var(--gold2);background:var(--panel);color:white;font-size:15px}
+    .search::placeholder{color:#b9c5d6}
+    .categories,.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+    .category,.product,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px}
+    .category{text-align:center}
+    .category .emoji,.product .emoji{font-size:34px}
+    .category h3,.product h3{margin:7px 0;color:var(--gold);font-size:17px}
+    .category p,.product p{margin:5px 0;color:var(--muted);font-size:13px}
+    .product{display:flex;flex-direction:column;text-align:center}
+    .product .price{margin:10px 0;color:var(--gold);font-weight:bold}
+    .product button{margin-top:auto}
+    .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:24px}
+    .panel{max-width:760px;margin:16px auto}
+    .panel p{color:var(--muted)}
+    .payment-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+    .payment-item{background:#0b1e39;border:1px solid var(--line);border-radius:9px;padding:14px;text-align:center;font-weight:bold}
+    form{display:grid;gap:10px}
+    input,select,textarea{width:100%;padding:12px;border-radius:7px;border:1px solid #9aa9bc;background:#fff;color:#111;font:inherit}
+    textarea{min-height:105px;resize:vertical}
+    label{font-size:14px;color:#e6edf7}
+    .notice{font-size:12px!important;color:#b9c5d6!important}
+    .contact-line{overflow-wrap:anywhere}
+    footer{text-align:center;padding:25px 16px;background:var(--navy2);border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    footer h3{color:var(--gold);margin:0 0 6px}
+    .pill{display:inline-block;border:1px solid #7e6937;color:var(--gold);border-radius:20px;padding:4px 10px;font-size:12px;margin:3px}
+    @media(max-width:520px){nav{gap:10px 15px}nav a{font-size:13px}.hero{padding:44px 16px}.categories,.products{grid-template-columns:repeat(2,minmax(0,1fr))}.category,.product{padding:12px}}
+    @media(max-width:360px){.categories,.products{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✦ DIGITAL AFRICA ✦</h1>
+    <p>La marketplace numérique de l'Afrique</p>
+  </header>
 
-<header>
-<h1>✦ DIGITAL AFRICA ✦</h1>
-<p>La marketplace numérique de l'Afrique</p>
-</header>
+  <nav aria-label="Navigation principale">
+    <a href="#accueil">Accueil</a>
+    <a href="#categories">Catégories</a>
+    <a href="#boutique">Boutique</a>
+    <a href="#vendeur">Devenir vendeur</a>
+    <a href="#paiement">Paiement</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-<nav>
-<a href="#accueil">Accueil</a>
-<a href="#boutique">Boutique</a>
-<a href="#vendeur">Devenir vendeur</a>
-<a href="#contact">Contact</a>
-</nav>
+  <main>
+    <div class="hero" id="accueil">
+      <h2>Achetez et vendez vos produits numériques</h2>
+      <p>Une plateforme pour les créateurs, entrepreneurs et commerçants africains. Découvrez des ressources numériques et développez votre activité.</p>
+      <p><span class="pill">Inscription gratuite</span><span class="pill">Boutique gratuite</span><span class="pill">Commission vendeur : 5 %</span></p>
+      <div class="actions">
+        <a class="btn" href="#boutique">Découvrir la boutique</a>
+        <a class="btn secondary" href="#vendeur">Devenir vendeur</a>
+      </div>
+    </div>
 
-<div class="hero" id="accueil">
-<h2>Bienvenue sur DIGITAL AFRICA</h2>
-<p>Achetez et vendez des produits numériques en toute simplicité.</p>
-<p>Une plateforme pour les créateurs, entrepreneurs et commerçants africains.</p>
-<a href="#boutique" class="btn">Découvrir la boutique</a>
-</div>
+    <section id="categories">
+      <h2 class="section-title">Nos catégories</h2>
+      <p class="section-intro">Explorez les univers numériques disponibles sur DIGITAL AFRICA.</p>
+      <div class="categories">
+        <article class="category"><div class="emoji">💻</div><h3>Applications et logiciels</h3><p>Outils et solutions numériques.</p></article>
+        <article class="category"><div class="emoji">📚</div><h3>Livres numériques et PDF</h3><p>E-books, guides et documents.</p></article>
+        <article class="category"><div class="emoji">🎓</div><h3>Formations en ligne</h3><p>Cours et ressources pédagogiques.</p></article>
+        <article class="category"><div class="emoji">🎵</div><h3>Musique et créations audio</h3><p>Créations sonores et contenus audio.</p></article>
+        <article class="category"><div class="emoji">🎨</div><h3>Graphisme et modèles</h3><p>Visuels, modèles et ressources créatives.</p></article>
+        <article class="category"><div class="emoji">🌍</div><h3>Services numériques</h3><p>Prestations proposées par les vendeurs.</p></article>
+        <article class="category"><div class="emoji">✨</div><h3>Autres produits numériques</h3><p>Découvrez d'autres créations numériques.</p></article>
+      </div>
+    </section>
 
-<section id="boutique">
-<h2 class="section-title">Notre boutique</h2>
-<input class="search" id="search" placeholder="Rechercher un produit..." oninput="filterProducts()">
-<div class="products" id="products">
+    <section id="boutique">
+      <h2 class="section-title">La boutique</h2>
+      <p class="section-intro">Les produits seront affichés ici après leur validation par l'administration.</p>
+      <input class="search" id="search" type="search" placeholder="Rechercher un produit..." aria-label="Rechercher un produit">
+      <div class="products" id="products">
+        <div class="empty">La boutique se prépare. Les premiers produits apparaîtront après la mise en place des comptes vendeurs et de la validation administrateur.</div>
+      </div>
+    </section>
 
-<div class="product" data-name="ebook livres">
-<div class="emoji">📚</div>
-<h3>E-books et livres</h3>
-<p>Livres numériques et formations écrites.</p>
-<p class="price">Prix selon le vendeur</p>
-<button onclick="contactSeller('E-books et livres')">Commander</button>
-</div>
+    <section id="vendeur">
+      <h2 class="section-title">Devenir vendeur</h2>
+      <p class="section-intro">L'inscription et la création d'une boutique sont gratuites. Chaque produit sera vérifié avant sa mise en vente.</p>
+      <div class="panel">
+        <form id="sellerForm">
+          <label for="sellerName">Nom complet</label>
+          <input id="sellerName" name="name" autocomplete="name" placeholder="Votre nom" required>
+          <label for="sellerEmail">Adresse e-mail</label>
+          <input id="sellerEmail" name="email" type="email" autocomplete="email" placeholder="Votre adresse e-mail" required>
+          <label for="sellerPhone">Téléphone</label>
+          <input id="sellerPhone" name="phone" type="tel" autocomplete="tel" placeholder="Votre numéro de téléphone" required>
+          <label for="sellerProduct">Présentez les produits numériques que vous souhaitez vendre</label>
+          <textarea id="sellerProduct" name="products" placeholder="Décrivez vos produits numériques..." required></textarea>
+          <button class="btn" type="submit">Préparer ma demande vendeur</button>
+        </form>
+        <p class="notice">Important : ce formulaire est une maquette. Il ne transmet pas encore les informations et ne crée pas de compte. La connexion sécurisée à la base de données sera ajoutée dans la prochaine étape.</p>
+      </div>
+    </section>
 
-<div class="product" data-name="formation cours">
-<div class="emoji">🎓</div>
-<h3>Formations</h3>
-<p>Développez vos compétences.</p>
-<p class="price">Prix selon le vendeur</p>
-<button onclick="contactSeller('Formations')">Commander</button>
-</div>
+    <section id="fonctionnement">
+      <h2 class="section-title">Comment ça fonctionne ?</h2>
+      <div class="panel">
+        <p><strong>1.</strong> Le vendeur crée gratuitement son compte et propose ses produits.</p>
+        <p><strong>2.</strong> L'administration vérifie et approuve chaque produit avant publication.</p>
+        <p><strong>3.</strong> Le client commande et paie par un moyen de paiement pris en charge.</p>
+        <p><strong>4.</strong> Après confirmation réelle du paiement par le prestataire, le téléchargement est débloqué.</p>
+        <p><strong>5.</strong> La commission de 5 % est calculée et les 95 % du vendeur sont suivis pour reversement.</p>
+        <p class="notice">Les paiements, téléchargements, soldes, avis et reversements ne sont pas encore actifs dans cette version de présentation.</p>
+      </div>
+    </section>
 
-<div class="product" data-name="logiciels applications">
-<div class="emoji">💻</div>
-<h3>Logiciels et applications</h3>
-<p>Solutions numériques.</p>
-<p class="price">Prix selon le vendeur</p>
-<button onclick="contactSeller('Logiciels et applications')">Commander</button>
-</div>
+    <section id="paiement">
+      <h2 class="section-title">Moyens de paiement prévus</h2>
+      <p class="section-intro">Les paiements seront centralisés par DIGITAL AFRICA via un prestataire de paiement compatible.</p>
+      <div class="panel">
+        <div class="payment-grid">
+          <div class="payment-item">🟠 Orange Money</div>
+          <div class="payment-item">🟡 MTN Money</div>
+          <div class="payment-item">🔵 Wave</div>
+        </div>
+        <p class="notice">Aucun paiement ne doit être envoyé à un numéro affiché sur cette page. L'intégration officielle et la vérification automatique devront être configurées avant toute vente réelle.</p>
+      </div>
+    </section>
 
-<div class="product" data-name="design graphisme">
-<div class="emoji">🎨</div>
-<h3>Design et graphisme</h3>
-<p>Créations graphiques numériques.</p>
-<p class="price">Prix selon le vendeur</p>
-<button onclick="contactSeller('Design et graphisme')">Commander</button>
-</div>
+    <section id="contact">
+      <h2 class="section-title">Contact et administration</h2>
+      <div class="panel">
+        <p>Pour toute question concernant DIGITAL AFRICA, contactez l'administration :</p>
+        <p class="contact-line">E-mail : <a href="mailto:bonjourgracieux@gmail.com">bonjourgracieux@gmail.com</a></p>
+        <p class="contact-line">Téléphone : <a href="tel:+2250544251966">+225 05 44 25 19 66</a></p>
+      </div>
+    </section>
+  </main>
 
-<div class="product" data-name="musique audio">
-<div class="emoji">🎵</div>
-<h3>Musique et audio</h3>
-<p>Contenus audio numériques.</p>
-<p class="price">Prix selon le vendeur</p>
-<button onclick="contactSeller('Musique et audio')">Commander</button>
-</div>
+  <footer>
+    <h3>DIGITAL AFRICA</h3>
+    <p>Innovation • Commerce • Opportunités</p>
+    <p>Inscription gratuite · Boutiques gratuites · Commission de 5 % sur les ventes réalisées</p>
+    <p>© 2026 DIGITAL AFRICA — Tous droits réservés</p>
+  </footer>
 
-<div class="product" data-name="services numériques">
-<div class="emoji">🌍</div>
-<h3>Services numériques</h3>
-<p>Services proposés par nos vendeurs.</p>
-<p class="price">Prix selon le vendeur</p>
-<button onclick="contactSeller('Services numériques')">Commander</button>
-</div>
+  <script>
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLocaleLowerCase('fr');
+      const empty = document.querySelector('#products .empty');
+      if (empty) empty.textContent = query
+        ? "Aucun produit publié ne correspond à votre recherche pour le moment."
+        : "La boutique se prépare. Les premiers produits apparaîtront après la mise en place des comptes vendeurs et de la validation administrateur.";
+    });
 
-</div>
-</section>
+    document.getElementById('sellerForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      alert("Merci ! Le formulaire est prêt, mais l'envoi réel sera activé après la connexion sécurisée à la base de données. Pour le moment, aucune donnée n'a été transmise.");
+    });
 
-<section id="vendeur">
-<h2 class="section-title">Devenir vendeur</h2>
-<div class="panel">
-<p>Vous avez des produits numériques à vendre ? Rejoignez DIGITAL AFRICA.</p>
-<form onsubmit="sellerRequest(event)">
-<input id="sellerName" placeholder="Votre nom" required>
-<input id="sellerEmail" type="email" placeholder="Votre adresse e-mail" required>
-<input id="sellerPhone" placeholder="Votre numéro de téléphone" required>
-<textarea id="sellerProduct" placeholder="Décrivez vos produits numériques" required></textarea>
-<button class="btn" type="submit">Envoyer ma demande</button>
-</form>
-</div>
-</section>
-
-<section id="paiement">
-<h2 class="section-title">Moyens de paiement</h2>
-<div class="panel">
-<p>🟠 Orange Money</p>
-<p>🟡 MTN Money</p>
-<p>🔵 Wave</p>
-<p class="small">Les paiements seront intégrés et sécurisés lors de la mise en place du système de paiement officiel.</p>
-</div>
-</section>
-
-<section id="contact">
-<h2 class="section-title">Contact</h2>
-<div class="panel">
-<p>Vous souhaitez rejoindre notre marketplace ?</p>
-<p>Contactez l'administration de DIGITAL AFRICA pour plus d'informations.</p>
-</div>
-</section>
-
-<footer>
-<h3 style="color:#e8bd54">DIGITAL AFRICA</h3>
-<p>Innovation • Commerce • Opportunités</p>
-<p>© 2026 DIGITAL AFRICA - Tous droits réservés</p>
-</footer>
-
-<script>
-function filterProducts(){
-const value=document.getElementById('search').value.toLowerCase();
-document.querySelectorAll('.product').forEach(p=>{
-p.style.display=p.innerText.toLowerCase().includes(value)?'block':'none';
-});
-}
-function contactSeller(product){
-alert("Vous avez sélectionné : "+product+". Le système de commande sera connecté après la configuration de la base de données.");
-}
-function sellerRequest(e){
-e.preventDefault();
-alert("Votre demande est préparée. L'envoi réel sera activé après la connexion à notre base de données.");
-}
-</script>
-
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .catch(error => console.warn('Service Worker non installé :', error));
+      });
+    }
+  </script>
 </body>
   </html>
-  
+          
