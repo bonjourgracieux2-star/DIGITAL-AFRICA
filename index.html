@@ -32,8 +32,15 @@ input,select,textarea{width:100%;padding:12px;margin:7px 0;border-radius:6px;bor
 footer{text-align:center;padding:25px;background:#0c2040;color:#ccc;font-size:13px}
 .small{color:#bbb;font-size:12px;line-height:1.5}
 </style>
-</head>
-<body>
+</head><link rel="manifest" href="./manifest.webmanifest">
+<body><script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(error => console.error("Service Worker:", error));
+  });
+}
+</script>
 
 <header>
 <h1>✦ DIGITAL AFRICA ✦</h1>
