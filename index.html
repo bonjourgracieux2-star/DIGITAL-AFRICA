@@ -672,3 +672,60 @@ async function loadAdmin(){
  </div>`).join(""):"Aucune candidature en attente.";
 
  document.getElementById("adminProducts").innerHT
+ 
+ML=pending?.length?pending.map(p=>`
+ <div class="status">
+ <strong>${escapeHTML(p.title)}</strong><br>
+ ${escapeHTML(p.category)} — ${money(p.price)}<br>
+ <button onclick="approveProduct('${p.id}')">Approuver</button>
+ <button class="danger" onclick="rejectProduct('${p.id}')">Refuser</button>
+ </div>`).join(""):"Aucun produit en attente.";
+}
+
+async function approveSeller(id){
+ const {error}=await db.from("seller_applications")
+ .update({status:"approved"}).eq("id",id);
+
+ if(error){notify(error.message);return;}
+ notify("Candidature approuvée.");
+ await loadAdmin();
+}
+
+async function rejectSeller(id){
+ const {error}=await db.from("seller_applications")
+ .update({status:"rejected"}).eq("id",id);
+
+ if(error){notify(error.message);return;}
+ notify("Candidature refusée.");
+ await loadAdmin();
+}
+
+async function approveProduct(id){
+ const {error}=await db.from("products")
+ .update({status:"approved"}).eq("id",id);
+
+ if(error){notify(error.message);return;}
+ notify("Produit approuvé et publié.");
+ await loadAdmin();
+ await loadProducts();
+}
+
+async function rejectProduct(id){
+ const {error}=await db.from("products")
+ .update({status:"rejected"}).eq("id",id);
+
+ if(error){notify(error.message);return;}
+ notify("Produit refusé.");
+ await loadAdmin();
+}
+
+async function start(){
+ await loadProducts();
+ await refreshAuth();
+}
+
+start();
+</script>
+</body>
+</html>
+
