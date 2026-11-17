@@ -5,50 +5,275 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08152b">
+<meta name="description" content="DIGITAL AFRICA, la marketplace numérique de l'Afrique. Achetez et vendez des produits numériques.">
 <title>DIGITAL AFRICA - Marketplace</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--navy:#08152b;--gold:#d6ad55;--white:#fff;--muted:#aab5c8}
+:root{
+ --navy:#08152b;
+ --navy2:#102849;
+ --gold:#d6ad55;
+ --gold2:#f2d58e;
+ --white:#fff;
+ --muted:#aab5c8;
+ --bg:#f4f6fa;
+ --text:#18263d;
+ --green:#16845b;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#f3f5f9;color:#17243a;font-family:Arial,sans-serif}
-header{background:var(--navy);color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
-.logo{font-size:23px;font-weight:bold;color:var(--gold)}
-nav{display:flex;gap:15px;flex-wrap:wrap}
-nav a{color:white;text-decoration:none;font-size:14px}
-button{background:var(--gold);color:#08152b;border:0;padding:12px 17px;border-radius:7px;font-weight:bold;cursor:pointer}
-button.secondary{background:#e7ebf2;color:#17243a}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;
+ line-height:1.6;
+}
+header{
+ background:rgba(8,21,43,.98);
+ color:white;
+ padding:15px 6%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:16px;
+ border-bottom:1px solid #d6ad5540;
+}
+.logo{
+ font-size:23px;
+ font-weight:900;
+ color:var(--gold);
+ letter-spacing:1px;
+}
+.logo span{color:white}
+nav{display:flex;gap:17px;flex-wrap:wrap}
+nav a{
+ color:#e8edf6;
+ text-decoration:none;
+ font-size:14px;
+ font-weight:bold;
+}
+nav a:hover{color:var(--gold)}
+button{
+ background:linear-gradient(135deg,var(--gold2),var(--gold));
+ color:#08152b;
+ border:0;
+ padding:13px 19px;
+ border-radius:8px;
+ font-weight:bold;
+ cursor:pointer;
+ transition:.2s;
+}
+button:hover{transform:translateY(-2px);filter:brightness(1.05)}
+button.secondary{background:#e8edf5;color:var(--navy)}
 button.danger{background:#b83232;color:white}
 button:disabled{opacity:.5;cursor:not-allowed}
-.hero{background:linear-gradient(120deg,#08152b,#17355b);color:white;padding:65px 7%;text-align:center}
-.hero h1{font-size:36px;margin:0 0 15px}
-.hero p{color:#d4dbea;line-height:1.7}
+.hero{
+ position:relative;
+ overflow:hidden;
+ background:
+ radial-gradient(circle at 85% 25%,#d6ad552b,transparent 27%),
+ linear-gradient(120deg,#061225,#102b4e 65%,#08152b);
+ color:white;
+ padding:80px 7%;
+ text-align:center;
+ min-height:390px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+}
+.hero:before{
+ content:"";
+ position:absolute;
+ width:310px;
+ height:310px;
+ border:1px solid #d6ad5540;
+ border-radius:50%;
+ left:-170px;
+ top:-150px;
+ box-shadow:0 0 0 35px #d6ad550b,0 0 0 70px #d6ad5508;
+}
+.hero:after{
+ content:"✦";
+ position:absolute;
+ right:8%;
+ bottom:5%;
+ color:#d6ad5530;
+ font-size:150px;
+}
+.hero-content{position:relative;z-index:1;max-width:850px}
+.hero-mark{
+ display:inline-block;
+ border:1px solid #d6ad5580;
+ color:var(--gold2);
+ padding:7px 17px;
+ border-radius:30px;
+ font-size:12px;
+ letter-spacing:2px;
+ margin-bottom:20px;
+}
+.hero h1{
+ font-size:clamp(32px,6vw,55px);
+ line-height:1.15;
+ margin:0 0 18px;
+}
+.hero p{
+ color:#d5deed;
+ font-size:17px;
+ max-width:680px;
+ margin:0 auto 27px;
+}
 .gold{color:var(--gold)}
-main{max-width:1150px;margin:35px auto;padding:0 18px}
-section{margin-bottom:35px}
-.panel{background:white;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 3px 15px #12213b0c}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-actions .outline{
+ background:transparent;
+ color:white;
+ border:1px solid var(--gold);
+}
+.trust{
+ background:white;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+ padding:22px 6%;
+ text-align:center;
+ border-bottom:1px solid #e8ebf1;
+}
+.trust strong{color:var(--navy);font-size:14px}
+.trust span{display:block;color:#778399;font-size:12px}
+main{max-width:1180px;margin:42px auto;padding:0 18px}
+section{margin-bottom:45px;scroll-margin-top:20px}
+.section-heading{text-align:center;margin-bottom:25px}
+.section-heading h2{font-size:27px;color:var(--navy);margin:0}
+.section-heading p{color:#78859a;margin:5px 0}
+.panel{
+ background:white;
+ border:1px solid #e8ebf1;
+ border-radius:16px;
+ padding:25px;
+ margin-bottom:20px;
+ box-shadow:0 8px 28px #12213b0a;
+}
 h2{color:var(--navy)}
-input,select,textarea{width:100%;padding:13px;margin:7px 0 14px;border:1px solid #dce1ea;border-radius:7px;font-size:15px}
-label{font-weight:bold;font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.product{background:white;border-radius:12px;padding:20px;box-shadow:0 3px 15px #12213b0c}
-.product h3{color:#10264a}
-.price{font-size:22px;color:#a47b25;font-weight:bold}
+h3{color:var(--navy)}
+.category-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:14px;
+}
+.category{
+ background:white;
+ border:1px solid #e9edf3;
+ border-radius:14px;
+ text-align:center;
+ padding:21px 10px;
+ box-shadow:0 5px 18px #12213b08;
+}
+.category .symbol{font-size:30px}
+.category strong{display:block;color:var(--navy);font-size:14px;margin-top:7px}
+.category small{color:#8994a6}
+.search-box{
+ background:white;
+ padding:14px;
+ border-radius:14px;
+ border:1px solid #e7ebf2;
+ margin-bottom:20px;
+}
+input,select,textarea{
+ width:100%;
+ padding:13px;
+ margin:7px 0 14px;
+ border:1px solid #dce1ea;
+ border-radius:8px;
+ font-size:15px;
+ background:#fff;
+ color:var(--text);
+}
+input:focus,select:focus,textarea:focus{
+ outline:2px solid #d6ad5570;
+ border-color:var(--gold);
+}
+label{font-weight:bold;font-size:14px;color:#263650}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+ gap:18px;
+}
+.product{
+ background:white;
+ border:1px solid #e8ebf1;
+ border-radius:15px;
+ padding:21px;
+ box-shadow:0 7px 22px #12213b0a;
+}
+.product h3{margin:12px 0 7px}
+.product .brand{font-size:11px;letter-spacing:1px;color:#ad832f;font-weight:bold}
+.product .price{font-size:22px;color:#a47b25;font-weight:900}
 .small{font-size:13px;color:#718096}
+.status{
+ padding:14px;
+ background:#f0f4f9;
+ border:1px solid #e5eaf1;
+ border-radius:9px;
+ margin:12px 0;
+}
+.status button{margin:5px 5px 5px 0}
 .hidden{display:none!important}
-.status{padding:12px;background:#edf2f8;border-radius:7px;margin:12px 0}
-#message{position:sticky;top:0;z-index:5;padding:12px;text-align:center;background:#fff2ce;color:#59410c;display:none}
-footer{background:var(--navy);color:white;text-align:center;padding:30px}
-footer p{color:var(--muted)}
-hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
-@media(max-width:600px){.hero h1{font-size:28px}header{padding:18px}.panel{padding:16px}}
+#message{
+ position:sticky;
+ top:0;
+ z-index:10;
+ padding:13px;
+ text-align:center;
+ background:#fff2ce;
+ color:#59410c;
+ display:none;
+ font-weight:bold;
+}
+.feature{
+ background:linear-gradient(120deg,#08152b,#17365d);
+ color:white;
+ padding:28px;
+ border-radius:16px;
+ margin:30px 0;
+ text-align:center;
+}
+.feature h2{color:var(--gold)}
+.feature p{color:#d8e0ed}
+.form-note{font-size:12px;color:#778399;margin-top:-8px}
+footer{
+ background:var(--navy);
+ color:white;
+ text-align:center;
+ padding:40px 20px;
+ border-top:3px solid var(--gold);
+}
+footer p{color:var(--muted);font-size:13px}
+.footer-links{color:var(--gold);font-size:13px}
+hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
+@media(max-width:650px){
+ header{padding:16px 18px}
+ nav{gap:12px}
+ nav a{font-size:12px}
+ .hero{padding:65px 20px;min-height:350px}
+ .hero p{font-size:15px}
+ .trust{padding:17px 8px;gap:5px}
+ .trust strong{font-size:11px}
+ .trust span{font-size:10px}
+ .panel{padding:17px}
+ main{margin:28px auto}
+}
 </style>
 </head>
-<body>
 
+<body>
 <div id="message"></div>
 
 <header>
- <div class="logo">✦ DIGITAL AFRICA</div>
+ <div class="logo">✦ DIGITAL <span>AFRICA</span></div>
  <nav>
   <a href="#accueil">Accueil</a>
   <a href="#boutique">Boutique</a>
@@ -59,26 +284,63 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
 </header>
 
 <div class="hero" id="accueil">
- <h1>Bienvenue sur <span class="gold">DIGITAL AFRICA</span></h1>
- <p>La marketplace numérique de l'Afrique.<br>
- Achetez, vendez et développez votre activité grâce aux produits numériques.</p>
- <button onclick="document.getElementById('boutique').scrollIntoView()">Découvrir la boutique</button>
+ <div class="hero-content">
+  <div class="hero-mark">✦ L'INNOVATION AFRICAINE</div>
+  <h1>Le numérique africain<br><span class="gold">à portée de main</span></h1>
+  <p>Achetez, vendez et développez vos activités avec une marketplace dédiée aux produits numériques. Le talent africain mérite une vitrine mondiale.</p>
+  <div class="hero-actions">
+   <button onclick="document.getElementById('boutique').scrollIntoView()">Découvrir la boutique</button>
+   <button class="outline" onclick="document.getElementById('vendeur').scrollIntoView()">Devenir vendeur</button>
+  </div>
+ </div>
+</div>
+
+<div class="trust">
+ <div><strong>✦ Plateforme africaine</strong><span>Une vitrine pour les talents</span></div>
+ <div><strong>◆ Paiements en FCFA</strong><span>Orange Money • MTN • Wave</span></div>
+ <div><strong>✓ Produits vérifiés</strong><span>Validation avant publication</span></div>
 </div>
 
 <main>
 
-<section id="boutique">
- <h2>Notre boutique</h2>
- <p>Découvrez les produits numériques proposés par nos vendeurs.</p>
- <input id="search" placeholder="Rechercher un produit..." oninput="renderProducts()">
- <div id="products" class="grid">
-  Chargement des produits...
+<section>
+ <div class="section-heading">
+  <h2>Explorez nos univers</h2>
+  <p>Des solutions numériques pour vos projets.</p>
+ </div>
+ <div class="category-grid">
+  <div class="category"><div class="symbol">📚</div><strong>E-books et livres</strong><small>Lecture et savoir</small></div>
+  <div class="category"><div class="symbol">🎓</div><strong>Formations</strong><small>Apprendre et progresser</small></div>
+  <div class="category"><div class="symbol">💻</div><strong>Logiciels</strong><small>Outils numériques</small></div>
+  <div class="category"><div class="symbol">🎨</div><strong>Graphisme</strong><small>Créativité et design</small></div>
+  <div class="category"><div class="symbol">📄</div><strong>Documents</strong><small>Modèles professionnels</small></div>
+  <div class="category"><div class="symbol">🌍</div><strong>Autres produits</strong><small>Découvrez nos offres</small></div>
  </div>
 </section>
 
+<section id="boutique">
+ <div class="section-heading">
+  <h2>La boutique</h2>
+  <p>Découvrez les produits numériques proposés par nos vendeurs.</p>
+ </div>
+ <div class="search-box">
+  <input id="search" placeholder="⌕ Rechercher un produit..." oninput="renderProducts()">
+ </div>
+ <div id="products" class="grid">Chargement des produits...</div>
+</section>
+
+<div class="feature">
+ <h2>Votre talent a sa place ici</h2>
+ <p>Vous avez une formation, un e-book, un logiciel ou une création numérique à vendre ? Rejoignez notre communauté de vendeurs.</p>
+ <button onclick="document.getElementById('vendeur').scrollIntoView()">Rejoindre les vendeurs</button>
+</div>
+
 <section id="compte">
+ <div class="section-heading">
+  <h2>Votre espace personnel</h2>
+  <p>Connectez-vous ou créez votre compte DIGITAL AFRICA.</p>
+ </div>
  <div class="panel">
-  <h2>Mon compte</h2>
   <div id="authForms">
    <h3>Créer un compte</h3>
    <form id="signupForm">
@@ -88,22 +350,24 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
     <input id="signupEmail" type="email" required placeholder="Votre e-mail">
     <label>Mot de passe</label>
     <input id="signupPassword" type="password" minlength="8" required placeholder="8 caractères minimum">
+    <p class="form-note">Choisissez un mot de passe sécurisé.</p>
     <button type="submit">Créer mon compte</button>
    </form>
    <hr>
-   <h3>Déjà membre ? Connexion</h3>
+   <h3>Déjà membre ? Connectez-vous</h3>
    <form id="loginForm">
-    <label>E-mail</label>
-    <input id="loginEmail" type="email" required>
+    <label>Adresse e-mail</label>
+    <input id="loginEmail" type="email" required placeholder="Votre e-mail">
     <label>Mot de passe</label>
-    <input id="loginPassword" type="password" required>
+    <input id="loginPassword" type="password" required placeholder="Votre mot de passe">
     <button type="submit">Se connecter</button>
    </form>
   </div>
 
   <div id="userArea" class="hidden">
+   <h3>Bienvenue dans votre espace !</h3>
    <div class="status">
-    Connecté : <strong id="userEmail"></strong><br>
+    E-mail : <strong id="userEmail"></strong><br>
     Nom : <strong id="userName"></strong><br>
     Rôle : <strong id="userRole"></strong>
    </div>
@@ -113,9 +377,13 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
 </section>
 
 <section id="vendeur">
+ <div class="section-heading">
+  <h2>Espace vendeur</h2>
+  <p>Développez votre activité avec DIGITAL AFRICA.</p>
+ </div>
  <div class="panel">
-  <h2>Devenir vendeur</h2>
-  <p>Rejoignez DIGITAL AFRICA et proposez vos produits numériques.</p>
+  <h3>Devenir vendeur</h3>
+  <p>Soumettez votre candidature. L'administration vérifiera votre demande.</p>
   <form id="sellerForm">
    <label>Nom de votre boutique</label>
    <input id="storeName" required placeholder="Nom de votre boutique">
@@ -127,13 +395,13 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
  </div>
 
  <div class="panel hidden" id="sellerTools">
-  <h2>Publier un produit</h2>
+  <h3>Publier un produit</h3>
   <p>Chaque produit sera vérifié avant sa publication.</p>
   <form id="productForm">
    <label>Nom du produit</label>
-   <input id="productTitle" required>
+   <input id="productTitle" required placeholder="Nom du produit">
    <label>Description</label>
-   <textarea id="productDescription" rows="3"></textarea>
+   <textarea id="productDescription" rows="3" placeholder="Description du produit"></textarea>
    <label>Catégorie</label>
    <select id="productCategory" required>
     <option value="">Choisir une catégorie</option>
@@ -145,14 +413,17 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
     <option>Autres produits numériques</option>
    </select>
    <label>Prix en FCFA</label>
-   <input id="productPrice" type="number" min="1" required>
+   <input id="productPrice" type="number" min="1" required placeholder="Exemple : 5000">
    <button type="submit">Soumettre mon produit</button>
   </form>
  </div>
 </section>
 
 <section id="admin" class="hidden">
- <h2>Administration</h2>
+ <div class="section-heading">
+  <h2>Administration</h2>
+  <p>Gestion des vendeurs et des publications.</p>
+ </div>
  <div class="panel">
   <h3>Candidatures vendeurs</h3>
   <div id="adminSellers"></div>
@@ -168,7 +439,7 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
 <footer>
  <div class="logo">✦ DIGITAL AFRICA</div>
  <p>La marketplace numérique de l'Afrique</p>
- <p>Orange Money • MTN Money • Wave</p>
+ <div class="footer-links">Orange Money • MTN Money • Wave</div>
  <p>© 2026 DIGITAL AFRICA. Tous droits réservés.</p>
  <p>Innovation • Confiance • Transparence</p>
 </footer>
@@ -224,10 +495,10 @@ function renderProducts(){
 
  container.innerHTML=list.map(p=>`
   <article class="product">
-   <div class="gold">✦ DIGITAL AFRICA</div>
+   <div class="brand">✦ DIGITAL AFRICA</div>
    <h3>${escapeHTML(p.title)}</h3>
    <p>${escapeHTML(p.description||"Produit numérique")}</p>
-   <p class="small">${escapeHTML(p.category)}</p>
+   <p class="small">${escapeHTML(p.category||"")}</p>
    <div class="price">${money(p.price)}</div>
    <p class="small">Vendeur vérifié par la plateforme</p>
   </article>
@@ -400,41 +671,4 @@ async function loadAdmin(){
  <button class="danger" onclick="rejectSeller('${s.id}')">Refuser</button>
  </div>`).join(""):"Aucune candidature en attente.";
 
- document.getElementById("adminProducts").innerHTML=
- pending?.length?pending.map(p=>`
- <div class="status">
- <strong>${escapeHTML(p.title)}</strong><br>
- ${escapeHTML(p.category)} • ${money(p.price)}<br>
- <button onclick="approveProduct('${p.id}')">Publier</button>
- <button class="danger" onclick="rejectProduct('${p.id}')">Refuser</button>
- </div>`).join(""):"Aucun produit en attente.";
-}
-
-async function adminUpdate(table,id,status){
- if(currentProfile?.role!=="admin"){notify("Accès réservé à l'administration.");return;}
- const {error}=await db.from(table).update({status}).eq("id",id);
- if(error){notify(error.message);return;}
- notify("Modification enregistrée.");
- await loadAdmin();
- await loadProducts();
-}
-
-function approveSeller(id){adminUpdate("seller_applications",id,"approved")}
-function rejectSeller(id){adminUpdate("seller_applications",id,"rejected")}
-function approveProduct(id){adminUpdate("products",id,"approved")}
-function rejectProduct(id){adminUpdate("products",id,"rejected")}
-
-db.auth.onAuthStateChange(()=>{
- setTimeout(refreshAuth,0);
-});
-
-async function start(){
- await loadProducts();
- await refreshAuth();
-}
-
-start();
-</script>
-</body>
-                                     </html>
-  
+ document.getElementById("adminProducts").innerHT
