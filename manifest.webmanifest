@@ -1,0 +1,9 @@
+{
+  "name": "DIGITAL AFRICA",
+  "short_name": "DIGITAL AFRICA",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07172f",
+  "theme_color": "#07172f",
+  "description": "Boutique de produits numériques"
+}
