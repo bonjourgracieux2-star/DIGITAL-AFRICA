@@ -3,348 +3,438 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07152e">
-<meta name="description" content="DIGITAL AFRICA, marketplace numérique africaine.">
-<title>DIGITAL AFRICA</title>
-<link rel="manifest" href="./manifest.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08152b">
+<title>DIGITAL AFRICA - Marketplace</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--navy:#07152e;--panel:#102747;--gold:#e8bd54;--muted:#c6d0df}
+:root{--navy:#08152b;--gold:#d6ad55;--white:#fff;--muted:#aab5c8}
 *{box-sizing:border-box}
-body{margin:0;background:var(--navy);color:white;font-family:Arial,sans-serif;line-height:1.6}
-header{text-align:center;background:#0c2040;padding:24px 12px;border-bottom:2px solid var(--gold)}
-header h1{color:var(--gold);margin:0}
-nav{position:sticky;top:0;background:#102747;padding:13px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;z-index:5}
-nav a{color:white;text-decoration:none;font-weight:bold;font-size:13px}
-nav a:hover{color:var(--gold)}
-.hero{text-align:center;padding:45px 15px;background:linear-gradient(140deg,#18385f,#07152e)}
-.hero h2{color:var(--gold);font-size:30px}
-.hero p{color:var(--muted);max-width:650px;margin:auto}
-section{max-width:950px;margin:auto;padding:30px 15px}
-h2.title{text-align:center;color:var(--gold)}
-.panel,.product,.category{background:var(--panel);border:1px solid #31496a;border-radius:12px;padding:17px;margin:12px 0}
-.panel{max-width:720px;margin:15px auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.category{text-align:center}
-.category strong{color:var(--gold)}
-input,textarea,select{width:100%;padding:12px;border-radius:7px;border:1px solid #9aa9bc;margin:5px 0 13px;font:inherit}
-textarea{min-height:90px}
-label{font-size:14px}
-button,.btn{display:inline-block;background:var(--gold);color:#07152e;padding:12px 17px;border:0;border-radius:8px;font-weight:bold;cursor:pointer;text-decoration:none;margin:5px 3px}
-button.secondary,.btn.secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
-button:disabled{opacity:.5}
-.muted{color:var(--muted);font-size:13px}
-.notice{padding:12px;border-radius:8px;background:#0b1e39;color:var(--muted);margin:12px 0}
-.status{color:var(--gold);white-space:pre-wrap}
-.product h3{color:var(--gold)}
-.price{color:var(--gold);font-weight:bold}
-footer{text-align:center;background:#0c2040;padding:25px;color:var(--muted)}
+body{margin:0;background:#f3f5f9;color:#17243a;font-family:Arial,sans-serif}
+header{background:var(--navy);color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.logo{font-size:23px;font-weight:bold;color:var(--gold)}
+nav{display:flex;gap:15px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-size:14px}
+button{background:var(--gold);color:#08152b;border:0;padding:12px 17px;border-radius:7px;font-weight:bold;cursor:pointer}
+button.secondary{background:#e7ebf2;color:#17243a}
+button.danger{background:#b83232;color:white}
+button:disabled{opacity:.5;cursor:not-allowed}
+.hero{background:linear-gradient(120deg,#08152b,#17355b);color:white;padding:65px 7%;text-align:center}
+.hero h1{font-size:36px;margin:0 0 15px}
+.hero p{color:#d4dbea;line-height:1.7}
+.gold{color:var(--gold)}
+main{max-width:1150px;margin:35px auto;padding:0 18px}
+section{margin-bottom:35px}
+.panel{background:white;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 3px 15px #12213b0c}
+h2{color:var(--navy)}
+input,select,textarea{width:100%;padding:13px;margin:7px 0 14px;border:1px solid #dce1ea;border-radius:7px;font-size:15px}
+label{font-weight:bold;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.product{background:white;border-radius:12px;padding:20px;box-shadow:0 3px 15px #12213b0c}
+.product h3{color:#10264a}
+.price{font-size:22px;color:#a47b25;font-weight:bold}
+.small{font-size:13px;color:#718096}
 .hidden{display:none!important}
+.status{padding:12px;background:#edf2f8;border-radius:7px;margin:12px 0}
+#message{position:sticky;top:0;z-index:5;padding:12px;text-align:center;background:#fff2ce;color:#59410c;display:none}
+footer{background:var(--navy);color:white;text-align:center;padding:30px}
+footer p{color:var(--muted)}
+hr{border:0;border-top:1px solid #e5e9f0;margin:20px 0}
+@media(max-width:600px){.hero h1{font-size:28px}header{padding:18px}.panel{padding:16px}}
 </style>
 </head>
 <body>
 
+<div id="message"></div>
+
 <header>
-<h1>✦ DIGITAL AFRICA ✦</h1>
-<p>La marketplace numérique de l'Afrique</p>
+ <div class="logo">✦ DIGITAL AFRICA</div>
+ <nav>
+  <a href="#accueil">Accueil</a>
+  <a href="#boutique">Boutique</a>
+  <a href="#vendeur">Vendeurs</a>
+  <a href="#compte">Mon compte</a>
+ </nav>
+ <button onclick="document.getElementById('compte').scrollIntoView()">Connexion</button>
 </header>
 
-<nav>
-<a href="#accueil">Accueil</a>
-<a href="#categories">Catégories</a>
-<a href="#boutique">Boutique</a>
-<a href="#compte">Mon compte</a>
-<a href="#vendeur">Vendeur</a>
-<a href="#contact">Contact</a>
-</nav>
+<div class="hero" id="accueil">
+ <h1>Bienvenue sur <span class="gold">DIGITAL AFRICA</span></h1>
+ <p>La marketplace numérique de l'Afrique.<br>
+ Achetez, vendez et développez votre activité grâce aux produits numériques.</p>
+ <button onclick="document.getElementById('boutique').scrollIntoView()">Découvrir la boutique</button>
+</div>
 
 <main>
-<div class="hero" id="accueil">
-<h2>Achetez et vendez vos produits numériques</h2>
-<p>La plateforme africaine dédiée aux créateurs, entrepreneurs et commerçants. Découvrez des ressources numériques et développez votre activité.</p>
-<br>
-<a class="btn" href="#boutique">Découvrir la boutique</a>
-<a class="btn secondary" href="#compte">Créer un compte</a>
-</div>
 
-<section id="categories">
-<h2 class="title">Nos catégories</h2>
-<div class="grid">
-<div class="category">💻<br><strong>Applications et logiciels</strong></div>
-<div class="category">📚<br><strong>Livres numériques et PDF</strong></div>
-<div class="category">🎓<br><strong>Formations en ligne</strong></div>
-<div class="category">🎵<br><strong>Musique et audio</strong></div>
-<div class="category">🎨<br><strong>Graphisme et modèles</strong></div>
-<div class="category">🌍<br><strong>Services numériques</strong></div>
-</div>
+<section id="boutique">
+ <h2>Notre boutique</h2>
+ <p>Découvrez les produits numériques proposés par nos vendeurs.</p>
+ <input id="search" placeholder="Rechercher un produit..." oninput="renderProducts()">
+ <div id="products" class="grid">
+  Chargement des produits...
+ </div>
 </section>
 
 <section id="compte">
-<h2 class="title">Mon compte DIGITAL AFRICA</h2>
-<div class="panel">
-<div id="authArea">
-<h3>Créer un compte</h3>
-<form id="signupForm">
-<label>Nom complet</label>
-<input id="fullName" required placeholder="Votre nom complet">
-<label>Adresse e-mail</label>
-<input id="signupEmail" type="email" required placeholder="Votre e-mail">
-<label>Mot de passe</label>
-<input id="signupPassword" type="password" minlength="8" required placeholder="8 caractères minimum">
-<button type="submit">Créer mon compte</button>
-</form>
-<hr>
-<h3>Déjà inscrit ? Connexion</h3>
-<form id="loginForm">
-<label>Adresse e-mail</label>
-<input id="loginEmail" type="email" required placeholder="Votre e-mail">
-<label>Mot de passe</label>
-<input id="loginPassword" type="password" required placeholder="Votre mot de passe">
-<button type="submit">Me connecter</button>
-</form>
-</div>
+ <div class="panel">
+  <h2>Mon compte</h2>
+  <div id="authForms">
+   <h3>Créer un compte</h3>
+   <form id="signupForm">
+    <label>Nom complet</label>
+    <input id="signupName" required placeholder="Votre nom">
+    <label>Adresse e-mail</label>
+    <input id="signupEmail" type="email" required placeholder="Votre e-mail">
+    <label>Mot de passe</label>
+    <input id="signupPassword" type="password" minlength="8" required placeholder="8 caractères minimum">
+    <button type="submit">Créer mon compte</button>
+   </form>
+   <hr>
+   <h3>Déjà membre ? Connexion</h3>
+   <form id="loginForm">
+    <label>E-mail</label>
+    <input id="loginEmail" type="email" required>
+    <label>Mot de passe</label>
+    <input id="loginPassword" type="password" required>
+    <button type="submit">Se connecter</button>
+   </form>
+  </div>
 
-<div id="userArea" class="hidden">
-<h3>Bienvenue sur votre espace !</h3>
-<p id="userEmail"></p>
-<p id="userRole" class="status"></p>
-<button id="logoutButton" class="secondary">Déconnexion</button>
-</div>
-<p id="authMessage" class="status" aria-live="polite"></p>
-</div>
+  <div id="userArea" class="hidden">
+   <div class="status">
+    Connecté : <strong id="userEmail"></strong><br>
+    Nom : <strong id="userName"></strong><br>
+    Rôle : <strong id="userRole"></strong>
+   </div>
+   <button class="secondary" onclick="logout()">Déconnexion</button>
+  </div>
+ </div>
 </section>
 
 <section id="vendeur">
-<h2 class="title">Devenir vendeur</h2>
-<div class="panel">
-<p class="muted">L'inscription vendeur est gratuite. Chaque demande sera examinée par l'administration.</p>
-<form id="sellerForm">
-<label>Nom de votre boutique</label>
-<input id="storeName" required placeholder="Nom de votre boutique">
-<label>Présentez votre activité et vos produits</label>
-<textarea id="storeDescription" required placeholder="Décrivez vos produits numériques..."></textarea>
-<button type="submit">Envoyer ma demande vendeur</button>
-</form>
-<p id="sellerMessage" class="status" aria-live="polite"></p>
-<p class="muted">Vous devez être connecté pour envoyer une demande.</p>
-</div>
+ <div class="panel">
+  <h2>Devenir vendeur</h2>
+  <p>Rejoignez DIGITAL AFRICA et proposez vos produits numériques.</p>
+  <form id="sellerForm">
+   <label>Nom de votre boutique</label>
+   <input id="storeName" required placeholder="Nom de votre boutique">
+   <label>Présentation de votre activité</label>
+   <textarea id="storeDescription" rows="3" placeholder="Présentez votre activité"></textarea>
+   <button type="submit">Envoyer ma candidature</button>
+  </form>
+  <div id="sellerStatus"></div>
+ </div>
+
+ <div class="panel hidden" id="sellerTools">
+  <h2>Publier un produit</h2>
+  <p>Chaque produit sera vérifié avant sa publication.</p>
+  <form id="productForm">
+   <label>Nom du produit</label>
+   <input id="productTitle" required>
+   <label>Description</label>
+   <textarea id="productDescription" rows="3"></textarea>
+   <label>Catégorie</label>
+   <select id="productCategory" required>
+    <option value="">Choisir une catégorie</option>
+    <option>E-books et livres</option>
+    <option>Formations</option>
+    <option>Logiciels</option>
+    <option>Graphisme et design</option>
+    <option>Documents professionnels</option>
+    <option>Autres produits numériques</option>
+   </select>
+   <label>Prix en FCFA</label>
+   <input id="productPrice" type="number" min="1" required>
+   <button type="submit">Soumettre mon produit</button>
+  </form>
+ </div>
 </section>
 
-<section id="boutique">
-<h2 class="title">Notre boutique</h2>
-<p class="muted" style="text-align:center">Découvrez les produits validés et publiés sur DIGITAL AFRICA.</p>
-<input id="search" type="search" placeholder="Rechercher un produit...">
-<div id="products" class="grid">
-<p class="muted">Chargement de la boutique...</p>
-</div>
+<section id="admin" class="hidden">
+ <h2>Administration</h2>
+ <div class="panel">
+  <h3>Candidatures vendeurs</h3>
+  <div id="adminSellers"></div>
+ </div>
+ <div class="panel">
+  <h3>Produits à valider</h3>
+  <div id="adminProducts"></div>
+ </div>
 </section>
 
-<section id="paiement">
-<h2 class="title">Moyens de paiement prévus</h2>
-<div class="grid">
-<div class="category">🟠<br><strong>Orange Money</strong></div>
-<div class="category">🟡<br><strong>MTN Money</strong></div>
-<div class="category">🔵<br><strong>Wave</strong></div>
-</div>
-<div class="notice">Les paiements ne sont pas encore activés. Aucun transfert d'argent ne doit être effectué avant la mise en place du prestataire de paiement officiel.</div>
-</section>
-
-<section id="contact">
-<h2 class="title">Nous contacter</h2>
-<div class="panel">
-<p>E-mail : <a href="mailto:bonjourgracieux@gmail.com">bonjourgracieux@gmail.com</a></p>
-<p>Téléphone : <a href="tel:+2250544251966">+225 05 44 25 19 66</a></p>
-</div>
-</section>
 </main>
 
 <footer>
-<h3 style="color:var(--gold)">DIGITAL AFRICA</h3>
-<p>Innovation • Commerce • Opportunités</p>
-<p>Commission prévue : 5 % sur les ventes réalisées.</p>
-<p>© 2026 DIGITAL AFRICA — Tous droits réservés</p>
+ <div class="logo">✦ DIGITAL AFRICA</div>
+ <p>La marketplace numérique de l'Afrique</p>
+ <p>Orange Money • MTN Money • Wave</p>
+ <p>© 2026 DIGITAL AFRICA. Tous droits réservés.</p>
+ <p>Innovation • Confiance • Transparence</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = 'https://mqyerongvzysnxlhzxfh.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_oOffU8kHG5Kzxnmu-bkUHg_q6gPiz34';
+const SUPABASE_URL = "https://mqyerongvzysnxlhzxfh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_oOffU8kHG5Kzxnmu-bkUHg_q6gPiz34";
 
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 let currentUser = null;
+let currentProfile = null;
+let products = [];
 
-const el = id => document.getElementById(id);
-const message = (id, text) => { el(id).textContent = text; };
-
-async function refreshAccount() {
-  const { data: { session } } = await db.auth.getSession();
-  currentUser = session?.user || null;
-
-  el('authArea').classList.toggle('hidden', !!currentUser);
-  el('userArea').classList.toggle('hidden', !currentUser);
-
-  if (currentUser) {
-    el('userEmail').textContent = 'E-mail : ' + currentUser.email;
-    const { data: profile } = await db
-      .from('profiles')
-      .select('full_name,role')
-      .eq('id', currentUser.id)
-      .maybeSingle();
-
-    el('userRole').textContent = profile
-      ? 'Nom : ' + (profile.full_name || 'Utilisateur') + ' | Rôle : ' + profile.role
-      : 'Profil en cours de préparation.';
-  }
+function notify(message){
+ const box=document.getElementById("message");
+ box.textContent=message;
+ box.style.display="block";
+ window.scrollTo({top:0,behavior:"smooth"});
+ setTimeout(()=>box.style.display="none",6000);
 }
 
-el('signupForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  message('authMessage','Création de votre compte...');
-  const { data, error } = await db.auth.signUp({
-    email: el('signupEmail').value.trim(),
-    password: el('signupPassword').value,
-    options: {
-      data: { full_name: el('fullName').value.trim() }
-    }
-  });
-
-  if (error) {
-    message('authMessage','Erreur : ' + error.message);
-    return;
-  }
-
-  message('authMessage', data.session
-    ? 'Compte créé avec succès ! Vous êtes connecté.'
-    : 'Compte créé. Consultez votre boîte e-mail pour confirmer votre inscription.');
-  await refreshAccount();
-});
-
-el('loginForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  message('authMessage','Connexion en cours...');
-  const { error } = await db.auth.signInWithPassword({
-    email: el('loginEmail').value.trim(),
-    password: el('loginPassword').value
-  });
-
-  if (error) {
-    message('authMessage','Connexion impossible : ' + error.message);
-    return;
-  }
-  message('authMessage','Connexion réussie ! Bienvenue.');
-  await refreshAccount();
-});
-
-el('logoutButton').addEventListener('click', async () => {
-  const { error } = await db.auth.signOut();
-  message('authMessage', error ? error.message : 'Vous êtes déconnecté.');
-  await refreshAccount();
-});
-
-db.auth.onAuthStateChange(() => {
-  setTimeout(refreshAccount, 0);
-});
-
-el('sellerForm').addEventListener('submit', async e => {
-  e.preventDefault();
-
-  if (!currentUser) {
-    message('sellerMessage','Connectez-vous avant de demander le statut vendeur.');
-    return;
-  }
-
-  message('sellerMessage','Envoi de votre demande...');
-  const { error } = await db.from('seller_applications').insert({
-    user_id: currentUser.id,
-    store_name: el('storeName').value.trim(),
-    description: el('storeDescription').value.trim(),
-    status: 'pending'
-  });
-
-  if (error) {
-    message('sellerMessage',
-      error.code === '23505'
-      ? 'Vous avez déjà envoyé une demande vendeur.'
-      : 'Erreur : ' + error.message);
-    return;
-  }
-
-  message('sellerMessage','Votre demande vendeur a bien été enregistrée. Elle attend la validation de l’administration.');
-  el('sellerForm').reset();
-});
-
-let allProducts = [];
-
-function displayProducts() {
-  const query = el('search').value.trim().toLocaleLowerCase('fr');
-  const container = el('products');
-  container.replaceChildren();
-
-  const filtered = allProducts.filter(p =>
-    (p.title || '').toLocaleLowerCase('fr').includes(query) ||
-    (p.description || '').toLocaleLowerCase('fr').includes(query) ||
-    (p.category || '').toLocaleLowerCase('fr').includes(query)
-  );
-
-  if (!filtered.length) {
-    const empty = document.createElement('p');
-    empty.className = 'muted';
-    empty.textContent = allProducts.length
-      ? 'Aucun produit ne correspond à votre recherche.'
-      : 'La boutique prépare ses premières publications. Revenez bientôt !';
-    container.appendChild(empty);
-    return;
-  }
-
-  filtered.forEach(p => {
-    const card = document.createElement('article');
-    card.className = 'product';
-    const title = document.createElement('h3');
-    title.textContent = p.title;
-    const description = document.createElement('p');
-    description.textContent = p.description || '';
-    const category = document.createElement('p');
-    category.className = 'muted';
-    category.textContent = p.category;
-    const price = document.createElement('p');
-    price.className = 'price';
-    price.textContent = Number(p.price).toLocaleString('fr-FR') + ' FCFA';
-    card.append(title, description, category, price);
-    container.appendChild(card);
-  });
+function money(value){
+ return new Intl.NumberFormat("fr-FR").format(value)+" FCFA";
 }
 
-async function loadProducts() {
-  const { data, error } = await db
-    .from('products')
-    .select('id,title,description,category,price')
-    .eq('status','approved')
-    .order('created_at',{ascending:false});
+async function loadProducts(){
+ const {data,error}=await db.from("products")
+ .select("id,title,description,category,price,seller_id,status")
+ .eq("status","approved")
+ .order("created_at",{ascending:false});
 
-  if (error) {
-    el('products').textContent = 'Impossible de charger la boutique pour le moment.';
-    console.error(error);
-    return;
-  }
-  allProducts = data || [];
-  displayProducts();
+ if(error){
+  document.getElementById("products").textContent="Impossible de charger les produits.";
+  console.error(error);
+  return;
+ }
+ products=data||[];
+ renderProducts();
 }
 
-el('search').addEventListener('input', displayProducts);
+function renderProducts(){
+ const term=document.getElementById("search").value.toLowerCase();
+ const list=products.filter(p=>
+  (p.title||"").toLowerCase().includes(term) ||
+  (p.category||"").toLowerCase().includes(term)
+ );
+ const container=document.getElementById("products");
 
-async function startApp() {
-  await refreshAccount();
-  await loadProducts();
+ if(!list.length){
+  container.innerHTML="<p>Aucun produit disponible pour le moment.</p>";
+  return;
+ }
+
+ container.innerHTML=list.map(p=>`
+  <article class="product">
+   <div class="gold">✦ DIGITAL AFRICA</div>
+   <h3>${escapeHTML(p.title)}</h3>
+   <p>${escapeHTML(p.description||"Produit numérique")}</p>
+   <p class="small">${escapeHTML(p.category)}</p>
+   <div class="price">${money(p.price)}</div>
+   <p class="small">Vendeur vérifié par la plateforme</p>
+  </article>
+ `).join("");
 }
 
-startApp();
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .catch(err => console.warn('Service Worker :', err));
-  });
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#039;"
+ }[c]));
 }
+
+async function loadProfile(){
+ if(!currentUser)return;
+
+ const {data,error}=await db.from("profiles")
+ .select("id,full_name,role")
+ .eq("id",currentUser.id).maybeSingle();
+
+ if(error){
+  console.error(error);
+  notify("Impossible de charger votre profil.");
+  return;
+ }
+ currentProfile=data;
+ document.getElementById("userName").textContent=data?.full_name||"Membre";
+ document.getElementById("userRole").textContent=data?.role||"customer";
+
+ const isSeller=await getSellerStatus();
+ document.getElementById("sellerTools").classList.toggle("hidden",!isSeller);
+ document.getElementById("admin").classList.toggle("hidden",data?.role!=="admin");
+
+ if(data?.role==="admin")loadAdmin();
+}
+
+async function getSellerStatus(){
+ const {data,error}=await db.from("seller_applications")
+ .select("status").eq("user_id",currentUser.id)
+ .order("created_at",{ascending:false}).limit(1);
+
+ if(error)return false;
+
+ const status=data?.[0]?.status;
+ document.getElementById("sellerStatus").textContent=
+ status==="approved"?"Votre boutique est approuvée. Vous pouvez publier des produits.":
+ status==="pending"?"Votre candidature est en attente de validation.":
+ status==="rejected"?"Votre candidature a été refusée. Contactez l'administration.":"";
+
+ return status==="approved";
+}
+
+async function refreshAuth(){
+ const {data}=await db.auth.getSession();
+ currentUser=data.session?.user||null;
+
+ document.getElementById("authForms").classList.toggle("hidden",!!currentUser);
+ document.getElementById("userArea").classList.toggle("hidden",!currentUser);
+
+ if(currentUser){
+  document.getElementById("userEmail").textContent=currentUser.email;
+  await loadProfile();
+ }else{
+  currentProfile=null;
+  document.getElementById("sellerTools").classList.add("hidden");
+  document.getElementById("admin").classList.add("hidden");
+ }
+}
+
+document.getElementById("signupForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const name=document.getElementById("signupName").value.trim();
+ const email=document.getElementById("signupEmail").value.trim();
+ const password=document.getElementById("signupPassword").value;
+
+ const {data,error}=await db.auth.signUp({
+  email,password,
+  options:{data:{full_name:name}}
+ });
+
+ if(error){notify(error.message);return;}
+
+ notify(data.session?
+  "Compte créé avec succès !":
+  "Compte créé. Vérifiez votre boîte e-mail pour confirmer votre inscription."
+ );
+ await refreshAuth();
+});
+
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const {error}=await db.auth.signInWithPassword({
+  email:document.getElementById("loginEmail").value.trim(),
+  password:document.getElementById("loginPassword").value
+ });
+ if(error){notify(error.message);return;}
+ notify("Connexion réussie !");
+ await refreshAuth();
+});
+
+async function logout(){
+ const {error}=await db.auth.signOut();
+ if(error){notify(error.message);return;}
+ notify("Vous êtes déconnecté.");
+ await refreshAuth();
+}
+
+document.getElementById("sellerForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!currentUser){notify("Connectez-vous d'abord.");return;}
+
+ const {data:existing,error:checkError}=await db.from("seller_applications")
+ .select("id,status").eq("user_id",currentUser.id).limit(1);
+
+ if(checkError){notify(checkError.message);return;}
+ if(existing?.length){notify("Une candidature existe déjà pour ce compte.");return;}
+
+ const {error}=await db.from("seller_applications").insert({
+  user_id:currentUser.id,
+  store_name:document.getElementById("storeName").value.trim(),
+  description:document.getElementById("storeDescription").value.trim(),
+  status:"pending"
+ });
+
+ if(error){notify(error.message);return;}
+ notify("Candidature envoyée. Attendez la validation de l'administration.");
+ await getSellerStatus();
+});
+
+document.getElementById("productForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!currentUser){notify("Connectez-vous.");return;}
+
+ const approved=await getSellerStatus();
+ if(!approved){notify("Votre boutique doit être approuvée.");return;}
+
+ const {error}=await db.from("products").insert({
+  seller_id:currentUser.id,
+  title:document.getElementById("productTitle").value.trim(),
+  description:document.getElementById("productDescription").value.trim(),
+  category:document.getElementById("productCategory").value,
+  price:Number(document.getElementById("productPrice").value),
+  status:"pending"
+ });
+
+ if(error){notify(error.message);return;}
+ notify("Produit soumis. Il sera publié après validation.");
+ e.target.reset();
+});
+
+async function loadAdmin(){
+ if(currentProfile?.role!=="admin")return;
+
+ const {data:sellers,error:e1}=await db.from("seller_applications")
+ .select("id,user_id,store_name,description,status")
+ .eq("status","pending");
+
+ const {data:pending,error:e2}=await db.from("products")
+ .select("id,title,category,price,seller_id,status")
+ .eq("status","pending");
+
+ if(e1||e2){notify("Erreur lors du chargement de l'administration.");return;}
+
+ document.getElementById("adminSellers").innerHTML=
+ sellers?.length?sellers.map(s=>`
+ <div class="status">
+ <strong>${escapeHTML(s.store_name)}</strong><br>
+ ${escapeHTML(s.description||"")}<br>
+ <button onclick="approveSeller('${s.id}')">Approuver</button>
+ <button class="danger" onclick="rejectSeller('${s.id}')">Refuser</button>
+ </div>`).join(""):"Aucune candidature en attente.";
+
+ document.getElementById("adminProducts").innerHTML=
+ pending?.length?pending.map(p=>`
+ <div class="status">
+ <strong>${escapeHTML(p.title)}</strong><br>
+ ${escapeHTML(p.category)} • ${money(p.price)}<br>
+ <button onclick="approveProduct('${p.id}')">Publier</button>
+ <button class="danger" onclick="rejectProduct('${p.id}')">Refuser</button>
+ </div>`).join(""):"Aucun produit en attente.";
+}
+
+async function adminUpdate(table,id,status){
+ if(currentProfile?.role!=="admin"){notify("Accès réservé à l'administration.");return;}
+ const {error}=await db.from(table).update({status}).eq("id",id);
+ if(error){notify(error.message);return;}
+ notify("Modification enregistrée.");
+ await loadAdmin();
+ await loadProducts();
+}
+
+function approveSeller(id){adminUpdate("seller_applications",id,"approved")}
+function rejectSeller(id){adminUpdate("seller_applications",id,"rejected")}
+function approveProduct(id){adminUpdate("products",id,"approved")}
+function rejectProduct(id){adminUpdate("products",id,"rejected")}
+
+db.auth.onAuthStateChange(()=>{
+ setTimeout(refreshAuth,0);
+});
+
+async function start(){
+ await loadProducts();
+ await refreshAuth();
+}
+
+start();
 </script>
 </body>
-</html>
+                                     </html>
+  
