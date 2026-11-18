@@ -652,6 +652,43 @@ document.getElementById("productForm").addEventListener("submit",async e=>{
 async function loadAdmin(){
  if(currentProfile?.role!=="admin")return;
 
+ const {data:sellers,error:e1}=await db
+  .from("seller_applications")
+  .select("id,user_id,store_name,description,status")
+  .eq("status","pending");
+
+ const {data:pending,error:e2}=await db
+  .from("products")
+  .select("id,title,category,price,seller_id,status")
+  .eq("status","pending");
+
+ if(e1||e2){
+  console.error(e1,e2);
+  notify("Erreur lors du chargement de l'administration.");
+  return;
+ }
+
+ document.getElementById("adminSellers").innerHTML=
+ sellers?.length?sellers.map(s=>`
+  <div class="status">
+   <strong>${escapeHTML(s.store_name)}</strong><br>
+   ${escapeHTML(s.description||"")}<br>
+   <button onclick="approveSeller('${s.id}')">Approuver</button>
+   <button class="danger" onclick="rejectSeller('${s.id}')">Refuser</button>
+  </div>
+ `).join(""):"Aucune candidature en attente.";
+
+ document.getElementById("adminProducts").innerHTML=
+ pending?.length?pending.map(p=>`
+  <div class="status">
+   <strong>${escapeHTML(p.title)}</strong><br>
+   ${escapeHTML(p.category||"")} — ${money(p.price)}<br>
+   <button onclick="approveProduct('${p.id}')">Approuver</button>
+   <button class="danger" onclick="rejectProduct('${p.id}')">Refuser</button>
+  </div>
+ `).join(""):"Aucun produit en attente.";
+  }
+
  const {data:sellers,error:e1}=await db.from("seller_applications")
  .select("id,user_id,store_name,description,status")
  .eq("status","pending");
