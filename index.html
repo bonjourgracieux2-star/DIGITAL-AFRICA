@@ -1,12 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08152b">
-<meta name="description" content="DIGITAL AFRICA, la marketplace numérique de l'Afrique. Achetez et vendez des produits numériques.">
+<meta name="description" content="DIGITAL AFRICA : marketplace numérique africaine.">
 <title>DIGITAL AFRICA - Marketplace</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -24,122 +24,49 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
- margin:0;
- background:var(--bg);
- color:var(--text);
- font-family:Arial,Helvetica,sans-serif;
- line-height:1.6;
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;line-height:1.6;
 }
 header{
- background:rgba(8,21,43,.98);
- color:white;
- padding:15px 6%;
- display:flex;
- justify-content:space-between;
- align-items:center;
- flex-wrap:wrap;
- gap:16px;
- border-bottom:1px solid #d6ad5540;
+ background:var(--navy);color:white;padding:15px 6%;
+ display:flex;justify-content:space-between;align-items:center;
+ flex-wrap:wrap;gap:15px;border-bottom:1px solid #d6ad5540;
 }
-.logo{
- font-size:23px;
- font-weight:900;
- color:var(--gold);
- letter-spacing:1px;
-}
+.logo{font-size:23px;font-weight:900;color:var(--gold)}
 .logo span{color:white}
 nav{display:flex;gap:17px;flex-wrap:wrap}
-nav a{
- color:#e8edf6;
- text-decoration:none;
- font-size:14px;
- font-weight:bold;
-}
+nav a{color:white;text-decoration:none;font-size:14px;font-weight:bold}
 nav a:hover{color:var(--gold)}
 button{
  background:linear-gradient(135deg,var(--gold2),var(--gold));
- color:#08152b;
- border:0;
- padding:13px 19px;
- border-radius:8px;
- font-weight:bold;
- cursor:pointer;
- transition:.2s;
+ color:var(--navy);border:0;padding:12px 18px;
+ border-radius:8px;font-weight:bold;cursor:pointer;
 }
-button:hover{transform:translateY(-2px);filter:brightness(1.05)}
+button:hover{filter:brightness(1.06)}
 button.secondary{background:#e8edf5;color:var(--navy)}
 button.danger{background:#b83232;color:white}
 button:disabled{opacity:.5;cursor:not-allowed}
 .hero{
- position:relative;
- overflow:hidden;
- background:
- radial-gradient(circle at 85% 25%,#d6ad552b,transparent 27%),
+ background:radial-gradient(circle at 85% 25%,#d6ad552b,transparent 27%),
  linear-gradient(120deg,#061225,#102b4e 65%,#08152b);
- color:white;
- padding:80px 7%;
- text-align:center;
- min-height:390px;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
+ color:white;padding:80px 7%;text-align:center;
+ min-height:390px;display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
 }
-.hero:before{
- content:"";
- position:absolute;
- width:310px;
- height:310px;
- border:1px solid #d6ad5540;
- border-radius:50%;
- left:-170px;
- top:-150px;
- box-shadow:0 0 0 35px #d6ad550b,0 0 0 70px #d6ad5508;
-}
-.hero:after{
- content:"✦";
- position:absolute;
- right:8%;
- bottom:5%;
- color:#d6ad5530;
- font-size:150px;
-}
-.hero-content{position:relative;z-index:1;max-width:850px}
+.hero-content{max-width:850px}
 .hero-mark{
- display:inline-block;
- border:1px solid #d6ad5580;
- color:var(--gold2);
- padding:7px 17px;
- border-radius:30px;
- font-size:12px;
- letter-spacing:2px;
- margin-bottom:20px;
+ display:inline-block;border:1px solid #d6ad5580;
+ color:var(--gold2);padding:7px 17px;border-radius:30px;
+ font-size:12px;letter-spacing:2px;margin-bottom:20px;
 }
-.hero h1{
- font-size:clamp(32px,6vw,55px);
- line-height:1.15;
- margin:0 0 18px;
-}
-.hero p{
- color:#d5deed;
- font-size:17px;
- max-width:680px;
- margin:0 auto 27px;
-}
+.hero h1{font-size:clamp(32px,6vw,55px);line-height:1.15}
+.hero p{color:#d5deed;font-size:17px;max-width:680px;margin:20px auto}
 .gold{color:var(--gold)}
 .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.hero-actions .outline{
- background:transparent;
- color:white;
- border:1px solid var(--gold);
-}
+.outline{background:transparent;color:white;border:1px solid var(--gold)}
 .trust{
- background:white;
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:12px;
- padding:22px 6%;
- text-align:center;
+ background:white;display:grid;grid-template-columns:repeat(3,1fr);
+ gap:12px;padding:22px 6%;text-align:center;
  border-bottom:1px solid #e8ebf1;
 }
 .trust strong{color:var(--navy);font-size:14px}
@@ -148,118 +75,65 @@ main{max-width:1180px;margin:42px auto;padding:0 18px}
 section{margin-bottom:45px;scroll-margin-top:20px}
 .section-heading{text-align:center;margin-bottom:25px}
 .section-heading h2{font-size:27px;color:var(--navy);margin:0}
-.section-heading p{color:#78859a;margin:5px 0}
-.panel{
- background:white;
- border:1px solid #e8ebf1;
- border-radius:16px;
- padding:25px;
- margin-bottom:20px;
- box-shadow:0 8px 28px #12213b0a;
-}
-h2{color:var(--navy)}
-h3{color:var(--navy)}
-.category-grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
- gap:14px;
-}
-.category{
- background:white;
- border:1px solid #e9edf3;
- border-radius:14px;
- text-align:center;
- padding:21px 10px;
- box-shadow:0 5px 18px #12213b08;
-}
-.category .symbol{font-size:30px}
-.category strong{display:block;color:var(--navy);font-size:14px;margin-top:7px}
-.category small{color:#8994a6}
-.search-box{
- background:white;
- padding:14px;
- border-radius:14px;
- border:1px solid #e7ebf2;
- margin-bottom:20px;
-}
-input,select,textarea{
- width:100%;
- padding:13px;
- margin:7px 0 14px;
- border:1px solid #dce1ea;
- border-radius:8px;
- font-size:15px;
- background:#fff;
- color:var(--text);
-}
-input:focus,select:focus,textarea:focus{
- outline:2px solid #d6ad5570;
- border-color:var(--gold);
-}
-label{font-weight:bold;font-size:14px;color:#263650}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
- gap:18px;
-}
-.product{
- background:white;
- border:1px solid #e8ebf1;
- border-radius:15px;
- padding:21px;
+.section-heading p{color:#78859a}
+.panel,.product,.category{
+ background:white;border:1px solid #e8ebf1;
+ border-radius:15px;padding:22px;
  box-shadow:0 7px 22px #12213b0a;
 }
-.product h3{margin:12px 0 7px}
-.product .brand{font-size:11px;letter-spacing:1px;color:#ad832f;font-weight:bold}
-.product .price{font-size:22px;color:#a47b25;font-weight:900}
-.small{font-size:13px;color:#718096}
+.panel{margin-bottom:20px}
+.category-grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:14px;
+}
+.category{text-align:center;padding:20px 10px}
+.symbol{font-size:30px}
+.category strong{display:block;color:var(--navy)}
+.category small,.small{color:#8994a6;font-size:13px}
+.search-box{background:white;padding:14px;border-radius:12px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.product h3{color:var(--navy)}
+.brand{font-size:11px;letter-spacing:1px;color:#ad832f;font-weight:bold}
+.price{font-size:22px;color:#a47b25;font-weight:900}
+input,select,textarea{
+ width:100%;padding:13px;margin:7px 0 14px;
+ border:1px solid #dce1ea;border-radius:8px;
+ font-size:15px;background:white;color:var(--text);
+}
+input:focus,select:focus,textarea:focus{outline:2px solid #d6ad5570}
+label{font-weight:bold;font-size:14px;color:#263650}
 .status{
- padding:14px;
- background:#f0f4f9;
- border:1px solid #e5eaf1;
- border-radius:9px;
- margin:12px 0;
+ padding:14px;background:#f0f4f9;border:1px solid #e5eaf1;
+ border-radius:9px;margin:12px 0;overflow-wrap:anywhere;
 }
 .status button{margin:5px 5px 5px 0}
 .hidden{display:none!important}
 #message{
- position:sticky;
- top:0;
- z-index:10;
- padding:13px;
- text-align:center;
- background:#fff2ce;
- color:#59410c;
- display:none;
- font-weight:bold;
+ position:sticky;top:0;z-index:20;padding:13px;
+ text-align:center;background:#fff2ce;color:#59410c;
+ display:none;font-weight:bold;
 }
 .feature{
  background:linear-gradient(120deg,#08152b,#17365d);
- color:white;
- padding:28px;
- border-radius:16px;
- margin:30px 0;
- text-align:center;
+ color:white;padding:28px;border-radius:16px;margin:30px 0;text-align:center;
 }
 .feature h2{color:var(--gold)}
 .feature p{color:#d8e0ed}
-.form-note{font-size:12px;color:#778399;margin-top:-8px}
+.form-note{font-size:12px;color:#778399}
 footer{
- background:var(--navy);
- color:white;
- text-align:center;
- padding:40px 20px;
- border-top:3px solid var(--gold);
+ background:var(--navy);color:white;text-align:center;
+ padding:40px 20px;border-top:3px solid var(--gold);
 }
 footer p{color:var(--muted);font-size:13px}
 .footer-links{color:var(--gold);font-size:13px}
+footer a{color:var(--gold2);text-decoration:none}
 hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
+.contact{margin:18px 0;line-height:2}
 @media(max-width:650px){
  header{padding:16px 18px}
  nav{gap:12px}
  nav a{font-size:12px}
- .hero{padding:65px 20px;min-height:350px}
- .hero p{font-size:15px}
+ .hero{padding:60px 20px;min-height:350px}
  .trust{padding:17px 8px;gap:5px}
  .trust strong{font-size:11px}
  .trust span{font-size:10px}
@@ -270,27 +144,34 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
 </head>
 
 <body>
+
 <div id="message"></div>
 
 <header>
  <div class="logo">✦ DIGITAL <span>AFRICA</span></div>
+
  <nav>
   <a href="#accueil">Accueil</a>
   <a href="#boutique">Boutique</a>
   <a href="#vendeur">Vendeurs</a>
   <a href="#compte">Mon compte</a>
  </nav>
- <button onclick="document.getElementById('compte').scrollIntoView()">Connexion</button>
+
+ <button id="headerAccount" onclick="goAccount()">Connexion</button>
 </header>
 
 <div class="hero" id="accueil">
  <div class="hero-content">
   <div class="hero-mark">✦ L'INNOVATION AFRICAINE</div>
   <h1>Le numérique africain<br><span class="gold">à portée de main</span></h1>
-  <p>Achetez, vendez et développez vos activités avec une marketplace dédiée aux produits numériques. Le talent africain mérite une vitrine mondiale.</p>
+  <p>
+   Achetez, vendez et développez vos activités avec une
+   marketplace dédiée aux produits numériques.
+   Le talent africain mérite une vitrine mondiale.
+  </p>
   <div class="hero-actions">
-   <button onclick="document.getElementById('boutique').scrollIntoView()">Découvrir la boutique</button>
-   <button class="outline" onclick="document.getElementById('vendeur').scrollIntoView()">Devenir vendeur</button>
+   <button onclick="goTo('boutique')">Découvrir la boutique</button>
+   <button class="outline" onclick="goTo('vendeur')">Devenir vendeur</button>
   </div>
  </div>
 </div>
@@ -308,6 +189,7 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
   <h2>Explorez nos univers</h2>
   <p>Des solutions numériques pour vos projets.</p>
  </div>
+
  <div class="category-grid">
   <div class="category"><div class="symbol">📚</div><strong>E-books et livres</strong><small>Lecture et savoir</small></div>
   <div class="category"><div class="symbol">🎓</div><strong>Formations</strong><small>Apprendre et progresser</small></div>
@@ -323,16 +205,18 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
   <h2>La boutique</h2>
   <p>Découvrez les produits numériques proposés par nos vendeurs.</p>
  </div>
+
  <div class="search-box">
   <input id="search" placeholder="⌕ Rechercher un produit..." oninput="renderProducts()">
  </div>
+
  <div id="products" class="grid">Chargement des produits...</div>
 </section>
 
 <div class="feature">
  <h2>Votre talent a sa place ici</h2>
- <p>Vous avez une formation, un e-book, un logiciel ou une création numérique à vendre ? Rejoignez notre communauté de vendeurs.</p>
- <button onclick="document.getElementById('vendeur').scrollIntoView()">Rejoindre les vendeurs</button>
+ <p>Vous avez une formation, un e-book, un logiciel ou une création numérique à vendre ?</p>
+ <button onclick="goTo('vendeur')">Rejoindre les vendeurs</button>
 </div>
 
 <section id="compte">
@@ -340,39 +224,53 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
   <h2>Votre espace personnel</h2>
   <p>Connectez-vous ou créez votre compte DIGITAL AFRICA.</p>
  </div>
+
  <div class="panel">
+
   <div id="authForms">
    <h3>Créer un compte</h3>
+
    <form id="signupForm">
     <label>Nom complet</label>
     <input id="signupName" required placeholder="Votre nom">
+
     <label>Adresse e-mail</label>
     <input id="signupEmail" type="email" required placeholder="Votre e-mail">
+
     <label>Mot de passe</label>
     <input id="signupPassword" type="password" minlength="8" required placeholder="8 caractères minimum">
+
     <p class="form-note">Choisissez un mot de passe sécurisé.</p>
     <button type="submit">Créer mon compte</button>
    </form>
+
    <hr>
+
    <h3>Déjà membre ? Connectez-vous</h3>
+
    <form id="loginForm">
     <label>Adresse e-mail</label>
     <input id="loginEmail" type="email" required placeholder="Votre e-mail">
+
     <label>Mot de passe</label>
     <input id="loginPassword" type="password" required placeholder="Votre mot de passe">
+
     <button type="submit">Se connecter</button>
    </form>
   </div>
 
   <div id="userArea" class="hidden">
    <h3>Bienvenue dans votre espace !</h3>
+
    <div class="status">
     E-mail : <strong id="userEmail"></strong><br>
     Nom : <strong id="userName"></strong><br>
     Rôle : <strong id="userRole"></strong>
    </div>
+
    <button class="secondary" onclick="logout()">Déconnexion</button>
   </div>
+
  </div>
 </section>
 
@@ -381,27 +279,35 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
   <h2>Espace vendeur</h2>
   <p>Développez votre activité avec DIGITAL AFRICA.</p>
  </div>
+
  <div class="panel">
   <h3>Devenir vendeur</h3>
   <p>Soumettez votre candidature. L'administration vérifiera votre demande.</p>
+
   <form id="sellerForm">
    <label>Nom de votre boutique</label>
    <input id="storeName" required placeholder="Nom de votre boutique">
+
    <label>Présentation de votre activité</label>
    <textarea id="storeDescription" rows="3" placeholder="Présentez votre activité"></textarea>
+
    <button type="submit">Envoyer ma candidature</button>
   </form>
+
   <div id="sellerStatus"></div>
  </div>
 
  <div class="panel hidden" id="sellerTools">
   <h3>Publier un produit</h3>
   <p>Chaque produit sera vérifié avant sa publication.</p>
+
   <form id="productForm">
    <label>Nom du produit</label>
    <input id="productTitle" required placeholder="Nom du produit">
+
    <label>Description</label>
    <textarea id="productDescription" rows="3" placeholder="Description du produit"></textarea>
+
    <label>Catégorie</label>
    <select id="productCategory" required>
     <option value="">Choisir une catégorie</option>
@@ -412,8 +318,10 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
     <option>Documents professionnels</option>
     <option>Autres produits numériques</option>
    </select>
+
    <label>Prix en FCFA</label>
    <input id="productPrice" type="number" min="1" required placeholder="Exemple : 5000">
+
    <button type="submit">Soumettre mon produit</button>
   </form>
  </div>
@@ -424,10 +332,12 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
   <h2>Administration</h2>
   <p>Gestion des vendeurs et des publications.</p>
  </div>
+
  <div class="panel">
   <h3>Candidatures vendeurs</h3>
   <div id="adminSellers"></div>
  </div>
+
  <div class="panel">
   <h3>Produits à valider</h3>
   <div id="adminProducts"></div>
@@ -439,54 +349,138 @@ hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
 <footer>
  <div class="logo">✦ DIGITAL AFRICA</div>
  <p>La marketplace numérique de l'Afrique</p>
- <div class="footer-links">Orange Money • MTN Money • Wave</div>
+
+ <div class="footer-links">
+  Orange Money • MTN Money • Wave
+ </div>
+
+ <div class="contact">
+  <p>Besoin d'aide ? Contactez notre administration.</p>
+  <p>
+   WhatsApp :
+   <a href="https://wa.me/2250544251966" target="_blank" rel="noopener">
+    05 44 25 19 66
+   </a>
+  </p>
+  <p>
+   E-mail :
+   <a href="mailto:bonjourgracieux@gmail.com">
+    bonjourgracieux@gmail.com
+   </a>
+  </p>
+ </div>
+
  <p>© 2026 DIGITAL AFRICA. Tous droits réservés.</p>
  <p>Innovation • Confiance • Transparence</p>
 </footer>
 
 <script>
-const SUPABASE_URL = "https://mqyerongvzysnxlhzxfh.supabase.co";
-const SUPABASE_KEY = "sb_publishable_oOffU8kHG5Kzxnmu-bkUHg_q6gPiz34";
+"use strict";
 
-const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+/* CONFIGURATION SUPABASE */
+
+const SUPABASE_URL =
+"https://mqyerongvzysnxlhzxfh.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_oOffU8kHG5Kzxnmu-bkUHg_q6gPiz34";
+
+const db = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
 let currentUser = null;
 let currentProfile = null;
 let products = [];
+let authReady = false;
+let authVersion = 0;
+
+/* OUTILS */
+
+function $(id){
+ return document.getElementById(id);
+}
+
+function goTo(id){
+ $(id).scrollIntoView({behavior:"smooth"});
+}
+
+function goAccount(){
+ goTo("compte");
+}
 
 function notify(message){
- const box=document.getElementById("message");
+ const box=$("message");
  box.textContent=message;
  box.style.display="block";
  window.scrollTo({top:0,behavior:"smooth"});
- setTimeout(()=>box.style.display="none",6000);
+
+ clearTimeout(window.messageTimer);
+
+ window.messageTimer=setTimeout(()=>{
+  box.style.display="none";
+ },6000);
 }
 
 function money(value){
  return new Intl.NumberFormat("fr-FR").format(value)+" FCFA";
 }
 
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#039;"
+ }[c]));
+}
+
+/* BOUTON DE CONNEXION DYNAMIQUE */
+
+function updateHeader(){
+ const button=$("headerAccount");
+
+ if(!currentUser){
+  button.textContent="Connexion";
+ }else if(currentProfile?.role==="admin"){
+  button.textContent="Administration";
+ }else{
+  button.textContent="Mon espace";
+ }
+}
+
+/* BOUTIQUE */
+
 async function loadProducts(){
- const {data,error}=await db.from("products")
- .select("id,title,description,category,price,seller_id,status")
- .eq("status","approved")
- .order("created_at",{ascending:false});
+ const {data,error}=await db
+  .from("products")
+  .select("id,title,description,category,price,seller_id,status")
+  .eq("status","approved")
+  .order("created_at",{ascending:false});
 
  if(error){
-  document.getElementById("products").textContent="Impossible de charger les produits.";
+  $("products").textContent=
+   "Impossible de charger les produits. Réessayez plus tard.";
   console.error(error);
   return;
  }
+
  products=data||[];
  renderProducts();
 }
 
 function renderProducts(){
- const term=document.getElementById("search").value.toLowerCase();
+ const term=$("search").value.trim().toLowerCase();
+
  const list=products.filter(p=>
-  (p.title||"").toLowerCase().includes(term) ||
-  (p.category||"").toLowerCase().includes(term)
+  (p.title||"").toLowerCase().includes(term)||
+  (p.category||"").toLowerCase().includes(term)||
+  (p.description||"").toLowerCase().includes(term)
  );
- const container=document.getElementById("products");
+
+ const container=$("products");
 
  if(!list.length){
   container.innerHTML="<p>Aucun produit disponible pour le moment.</p>";
@@ -505,264 +499,290 @@ function renderProducts(){
  `).join("");
 }
 
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",
-  '"':"&quot;","'":"&#039;"
- }[c]));
-}
+/* PROFIL UTILISATEUR */
 
 async function loadProfile(){
  if(!currentUser)return;
 
- const {data,error}=await db.from("profiles")
- .select("id,full_name,role")
- .eq("id",currentUser.id).maybeSingle();
+ const userId=currentUser.id;
+
+ const {data,error}=await db
+  .from("profiles")
+  .select("id,full_name,role")
+  .eq("id",userId)
+  .maybeSingle();
 
  if(error){
-  console.error(error);
+  console.error("Profil :",error);
   notify("Impossible de charger votre profil.");
   return;
  }
+
+ if(currentUser?.id!==userId)return;
+
  currentProfile=data;
- document.getElementById("userName").textContent=data?.full_name||"Membre";
- document.getElementById("userRole").textContent=data?.role||"customer";
 
- const isSeller=await getSellerStatus();
- document.getElementById("sellerTools").classList.toggle("hidden",!isSeller);
- document.getElementById("admin").classList.toggle("hidden",data?.role!=="admin");
+ $("userName").textContent=
+  data?.full_name||
+  currentUser.user_metadata?.full_name||
+  "Membre";
 
- if(data?.role==="admin")loadAdmin();
+ $("userRole").textContent=data?.role||"customer";
+
+ const isAdmin=data?.role==="admin";
+
+ $("admin").classList.toggle("hidden",!isAdmin);
+
+ if(isAdmin){
+  $("sellerTools").classList.add("hidden");
+  await loadAdmin();
+ }else{
+  const isSeller=await getSellerStatus();
+
+  if(currentUser?.id===userId){
+   $("sellerTools").classList.toggle("hidden",!isSeller);
+  }
+ }
+
+ updateHeader();
 }
 
-async function getSellerStatus(){
- const {data,error}=await db.from("seller_applications")
- .select("status").eq("user_id",currentUser.id)
- .order("created_at",{ascending:false}).limit(1);
+/* STATUT VENDEUR */
 
- if(error)return false;
+async function getSellerStatus(){
+ if(!currentUser)return false;
+
+ const userId=currentUser.id;
+
+ const {data,error}=await db
+  .from("seller_applications")
+  .select("status")
+  .eq("user_id",userId)
+  .order("created_at",{ascending:false})
+  .limit(1);
+
+ if(error){
+  console.error(error);
+  $("sellerStatus").textContent=
+   "Impossible de vérifier votre candidature.";
+  return false;
+ }
 
  const status=data?.[0]?.status;
- document.getElementById("sellerStatus").textContent=
- status==="approved"?"Votre boutique est approuvée. Vous pouvez publier des produits.":
- status==="pending"?"Votre candidature est en attente de validation.":
- status==="rejected"?"Votre candidature a été refusée. Contactez l'administration.":"";
+
+ $("sellerStatus").textContent=
+  status==="approved"
+   ?"Votre boutique est approuvée. Vous pouvez publier des produits."
+   :status==="pending"
+   ?"Votre candidature est en attente de validation."
+   :status==="rejected"
+   ?"Votre candidature a été refusée. Contactez l'administration."
+   :"Vous pouvez soumettre votre candidature.";
 
  return status==="approved";
 }
 
+/* AFFICHAGE AUTHENTIFICATION */
+
 async function refreshAuth(){
- const {data}=await db.auth.getSession();
- currentUser=data.session?.user||null;
+ const version=++authVersion;
 
- document.getElementById("authForms").classList.toggle("hidden",!!currentUser);
- document.getElementById("userArea").classList.toggle("hidden",!currentUser);
+ const {data,error}=await db.auth.getSession();
 
- if(currentUser){
-  document.getElementById("userEmail").textContent=currentUser.email;
-  await loadProfile();
- }else{
-  currentProfile=null;
-  document.getElementById("sellerTools").classList.add("hidden");
-  document.getElementById("admin").classList.add("hidden");
- }
-}
-
-document.getElementById("signupForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const name=document.getElementById("signupName").value.trim();
- const email=document.getElementById("signupEmail").value.trim();
- const password=document.getElementById("signupPassword").value;
-
- const {data,error}=await db.auth.signUp({
-  email,password,
-  options:{data:{full_name:name}}
- });
-
- if(error){notify(error.message);return;}
-
- notify(data.session?
-  "Compte créé avec succès !":
-  "Compte créé. Vérifiez votre boîte e-mail pour confirmer votre inscription."
- );
- await refreshAuth();
-});
-
-document.getElementById("loginForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const {error}=await db.auth.signInWithPassword({
-  email:document.getElementById("loginEmail").value.trim(),
-  password:document.getElementById("loginPassword").value
- });
- if(error){notify(error.message);return;}
- notify("Connexion réussie !");
- await refreshAuth();
-});
-
-async function logout(){
- const {error}=await db.auth.signOut();
- if(error){notify(error.message);return;}
- notify("Vous êtes déconnecté.");
- await refreshAuth();
-}
-
-document.getElementById("sellerForm").addEventListener("submit",async e=>{
- e.preventDefault();
- if(!currentUser){notify("Connectez-vous d'abord.");return;}
-
- const {data:existing,error:checkError}=await db.from("seller_applications")
- .select("id,status").eq("user_id",currentUser.id).limit(1);
-
- if(checkError){notify(checkError.message);return;}
- if(existing?.length){notify("Une candidature existe déjà pour ce compte.");return;}
-
- const {error}=await db.from("seller_applications").insert({
-  user_id:currentUser.id,
-  store_name:document.getElementById("storeName").value.trim(),
-  description:document.getElementById("storeDescription").value.trim(),
-  status:"pending"
- });
-
- if(error){notify(error.message);return;}
- notify("Candidature envoyée. Attendez la validation de l'administration.");
- await getSellerStatus();
-});
-
-document.getElementById("productForm").addEventListener("submit",async e=>{
- e.preventDefault();
- if(!currentUser){notify("Connectez-vous.");return;}
-
- const approved=await getSellerStatus();
- if(!approved){notify("Votre boutique doit être approuvée.");return;}
-
- const {error}=await db.from("products").insert({
-  seller_id:currentUser.id,
-  title:document.getElementById("productTitle").value.trim(),
-  description:document.getElementById("productDescription").value.trim(),
-  category:document.getElementById("productCategory").value,
-  price:Number(document.getElementById("productPrice").value),
-  status:"pending"
- });
-
- if(error){notify(error.message);return;}
- notify("Produit soumis. Il sera publié après validation.");
- e.target.reset();
-});
-
-async function loadAdmin(){
- if(currentProfile?.role!=="admin")return;
-
- const {data:sellers,error:e1}=await db
-  .from("seller_applications")
-  .select("id,user_id,store_name,description,status")
-  .eq("status","pending");
-
- const {data:pending,error:e2}=await db
-  .from("products")
-  .select("id,title,category,price,seller_id,status")
-  .eq("status","pending");
-
- if(e1||e2){
-  console.error(e1,e2);
-  notify("Erreur lors du chargement de l'administration.");
+ if(error){
+  console.error(error);
+  notify("Erreur de vérification de connexion.");
   return;
  }
 
- document.getElementById("adminSellers").innerHTML=
- sellers?.length?sellers.map(s=>`
-  <div class="status">
-   <strong>${escapeHTML(s.store_name)}</strong><br>
-   ${escapeHTML(s.description||"")}<br>
-   <button onclick="approveSeller('${s.id}')">Approuver</button>
-   <button class="danger" onclick="rejectSeller('${s.id}')">Refuser</button>
-  </div>
- `).join(""):"Aucune candidature en attente.";
+ if(version!==authVersion)return;
 
- document.getElementById("adminProducts").innerHTML=
- pending?.length?pending.map(p=>`
-  <div class="status">
-   <strong>${escapeHTML(p.title)}</strong><br>
-   ${escapeHTML(p.category||"")} — ${money(p.price)}<br>
-   <button onclick="approveProduct('${p.id}')">Approuver</button>
-   <button class="danger" onclick="rejectProduct('${p.id}')">Refuser</button>
-  </div>
- `).join(""):"Aucun produit en attente.";
+ currentUser=data.session?.user||null;
+
+ $("authForms").classList.toggle("hidden",!!currentUser);
+ $("userArea").classList.toggle("hidden",!currentUser);
+
+ if(currentUser){
+  $("userEmail").textContent=currentUser.email||"";
+  await loadProfile();
+ }else{
+  currentProfile=null;
+
+  $("userName").textContent="";
+  $("userRole").textContent="";
+
+  $("sellerTools").classList.add("hidden");
+  $("admin").classList.add("hidden");
+  $("sellerStatus").textContent="";
+ }
+
+ updateHeader();
+ authReady=true;
+}
+
+/* INSCRIPTION */
+
+$("signupForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const button=e.submitter;
+ button.disabled=true;
+
+ try{
+  const name=$("signupName").value.trim();
+  const email=$("signupEmail").value.trim();
+  const password=$("signupPassword").value;
+
+  if(password.length<8){
+   notify("Le mot de passe doit contenir au moins 8 caractères.");
+   return;
   }
 
- const {data:sellers,error:e1}=await db.from("seller_applications")
- .select("id,user_id,store_name,description,status")
- .eq("status","pending");
+  const {data,error}=await db.auth.signUp({
+   email,
+   password,
+   options:{
+    data:{full_name:name}
+   }
+  });
 
- const {data:pending,error:e2}=await db.from("products")
- .select("id,title,category,price,seller_id,status")
- .eq("status","pending");
+  if(error){
+   notify(error.message);
+   return;
+  }
 
- if(e1||e2){notify("Erreur lors du chargement de l'administration.");return;}
+  if(data.session){
+   notify("Compte créé avec succès !");
+   await refreshAuth();
+  }else{
+   notify("Compte créé. Vérifiez votre e-mail pour confirmer votre inscription.");
+  }
 
- document.getElementById("adminSellers").innerHTML=
- sellers?.length?sellers.map(s=>`
- <div class="status">
- <strong>${escapeHTML(s.store_name)}</strong><br>
- ${escapeHTML(s.description||"")}<br>
- <button onclick="approveSeller('${s.id}')">Approuver</button>
- <button class="danger" onclick="rejectSeller('${s.id}')">Refuser</button>
- </div>`).join(""):"Aucune candidature en attente.";
+ }catch(error){
+  console.error(error);
+  notify("Une erreur est survenue.");
+ }finally{
+  button.disabled=false;
+ }
+});
 
- document.getElementById("adminProducts").innerHT
- 
-ML=pending?.length?pending.map(p=>`
- <div class="status">
- <strong>${escapeHTML(p.title)}</strong><br>
- ${escapeHTML(p.category)} — ${money(p.price)}<br>
- <button onclick="approveProduct('${p.id}')">Approuver</button>
- <button class="danger" onclick="rejectProduct('${p.id}')">Refuser</button>
- </div>`).join(""):"Aucun produit en attente.";
-}
+/* CONNEXION */
 
-async function approveSeller(id){
- const {error}=await db.from("seller_applications")
- .update({status:"approved"}).eq("id",id);
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
 
- if(error){notify(error.message);return;}
- notify("Candidature approuvée.");
- await loadAdmin();
-}
+ const button=e.submitter;
+ button.disabled=true;
 
-async function rejectSeller(id){
- const {error}=await db.from("seller_applications")
- .update({status:"rejected"}).eq("id",id);
+ try{
+  const {error}=await db.auth.signInWithPassword({
+   email:$("loginEmail").value.trim(),
+   password:$("loginPassword").value
+  });
 
- if(error){notify(error.message);return;}
- notify("Candidature refusée.");
- await loadAdmin();
-}
+  if(error){
+   notify(error.message);
+   return;
+  }
 
-async function approveProduct(id){
- const {error}=await db.from("products")
- .update({status:"approved"}).eq("id",id);
+  notify("Connexion réussie !");
+  await refreshAuth();
 
- if(error){notify(error.message);return;}
- notify("Produit approuvé et publié.");
- await loadAdmin();
- await loadProducts();
-}
+ }catch(error){
+  console.error(error);
+  notify("Impossible de se connecter.");
+ }finally{
+  button.disabled=false;
+ }
+});
 
-async function rejectProduct(id){
- const {error}=await db.from("products")
- .update({status:"rejected"}).eq("id",id);
+/* DECONNEXION */
 
- if(error){notify(error.message);return;}
- notify("Produit refusé.");
- await loadAdmin();
-}
+async function logout(){
+ const {error}=await db.auth.signOut();
 
-async function start(){
- await loadProducts();
+ if(error){
+  notify(error.message);
+  return;
+ }
+
+ currentUser=null;
+ currentProfile=null;
+
  await refreshAuth();
+ notify("Vous êtes déconnecté.");
+ goAccount();
 }
 
-start();
-</script>
-</body>
-</html>
+/* CANDIDATURE VENDEUR */
 
+$("sellerForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ if(!currentUser){
+  notify("Connectez-vous d'abord.");
+  goAccount();
+  return;
+ }
+
+ if(currentProfile?.role==="admin"){
+  notify("Le compte administrateur ne peut pas candidater comme vendeur ici.");
+  return;
+ }
+
+ const button=e.submitter;
+ button.disabled=true;
+
+ try{
+  const {data:existing,error:checkError}=await db
+   .from("seller_applications")
+   .select("id,status")
+   .eq("user_id",currentUser.id)
+   .limit(1);
+
+  if(checkError){
+   notify(checkError.message);
+   return;
+  }
+
+  if(existing?.length){
+   notify("Une candidature existe déjà pour ce compte.");
+   await getSellerStatus();
+   return;
+  }
+
+  const {error}=await db
+   .from("seller_applications")
+   .insert({
+    user_id:currentUser.id,
+    store_name:$("storeName").value.trim(),
+    description:$("storeDescription").value.trim(),
+    status:"pending"
+   });
+
+  if(error){
+   notify(error.message);
+   return;
+  }
+
+  notify("Candidature envoyée. Attendez la validation de l'administration.");
+
+  $("sellerForm").reset();
+  await getSellerStatus();
+
+ }catch(error){
+  console.error(error);
+  notify("Erreur pendant l'envoi de votre candidature.");
+ }finally{
+  button.disabled=false;
+ }
+});
+
+/* PUBLICATION PRODUIT */
+
+$("productForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ if(!currentUser){
+  notify("Connectez-vous.");
+  goAccoun
