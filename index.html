@@ -1,788 +1,901 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08152b">
-<meta name="description" content="DIGITAL AFRICA : marketplace numérique africaine.">
-<title>DIGITAL AFRICA - Marketplace</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="description" content="DIGITAL AFRICA, marketplace numérique africaine">
+<title>DIGITAL AFRICA</title>
 
 <style>
-:root{
- --navy:#08152b;
- --navy2:#102849;
- --gold:#d6ad55;
- --gold2:#f2d58e;
- --white:#fff;
- --muted:#aab5c8;
- --bg:#f4f6fa;
- --text:#18263d;
- --green:#16845b;
+:root {
+  --navy: #08152b;
+  --gold: #d9ad45;
+  --white: #ffffff;
+  --bg: #f4f6fa;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
- margin:0;background:var(--bg);color:var(--text);
- font-family:Arial,Helvetica,sans-serif;line-height:1.6;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-header{
- background:var(--navy);color:white;padding:15px 6%;
- display:flex;justify-content:space-between;align-items:center;
- flex-wrap:wrap;gap:15px;border-bottom:1px solid #d6ad5540;
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: #17243a;
+  line-height: 1.6;
 }
-.logo{font-size:23px;font-weight:900;color:var(--gold)}
-.logo span{color:white}
-nav{display:flex;gap:17px;flex-wrap:wrap}
-nav a{color:white;text-decoration:none;font-size:14px;font-weight:bold}
-nav a:hover{color:var(--gold)}
-button{
- background:linear-gradient(135deg,var(--gold2),var(--gold));
- color:var(--navy);border:0;padding:12px 18px;
- border-radius:8px;font-weight:bold;cursor:pointer;
+
+header {
+  background: var(--navy);
+  color: white;
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-button:hover{filter:brightness(1.06)}
-button.secondary{background:#e8edf5;color:var(--navy)}
-button.danger{background:#b83232;color:white}
-button:disabled{opacity:.5;cursor:not-allowed}
-.hero{
- background:radial-gradient(circle at 85% 25%,#d6ad552b,transparent 27%),
- linear-gradient(120deg,#061225,#102b4e 65%,#08152b);
- color:white;padding:80px 7%;text-align:center;
- min-height:390px;display:flex;flex-direction:column;
- justify-content:center;align-items:center;
+
+.header-content {
+  max-width: 1150px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
-.hero-content{max-width:850px}
-.hero-mark{
- display:inline-block;border:1px solid #d6ad5580;
- color:var(--gold2);padding:7px 17px;border-radius:30px;
- font-size:12px;letter-spacing:2px;margin-bottom:20px;
+
+.logo {
+  color: var(--gold);
+  font-size: 22px;
+  font-weight: bold;
 }
-.hero h1{font-size:clamp(32px,6vw,55px);line-height:1.15}
-.hero p{color:#d5deed;font-size:17px;max-width:680px;margin:20px auto}
-.gold{color:var(--gold)}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.outline{background:transparent;color:white;border:1px solid var(--gold)}
-.trust{
- background:white;display:grid;grid-template-columns:repeat(3,1fr);
- gap:12px;padding:22px 6%;text-align:center;
- border-bottom:1px solid #e8ebf1;
+
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }
-.trust strong{color:var(--navy);font-size:14px}
-.trust span{display:block;color:#778399;font-size:12px}
-main{max-width:1180px;margin:42px auto;padding:0 18px}
-section{margin-bottom:45px;scroll-margin-top:20px}
-.section-heading{text-align:center;margin-bottom:25px}
-.section-heading h2{font-size:27px;color:var(--navy);margin:0}
-.section-heading p{color:#78859a}
-.panel,.product,.category{
- background:white;border:1px solid #e8ebf1;
- border-radius:15px;padding:22px;
- box-shadow:0 7px 22px #12213b0a;
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
 }
-.panel{margin-bottom:20px}
-.category-grid{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
- gap:14px;
+
+.hero {
+  background: linear-gradient(135deg,#08152b,#17365d);
+  color: white;
+  text-align: center;
+  padding: 75px 20px;
 }
-.category{text-align:center;padding:20px 10px}
-.symbol{font-size:30px}
-.category strong{display:block;color:var(--navy)}
-.category small,.small{color:#8994a6;font-size:13px}
-.search-box{background:white;padding:14px;border-radius:12px;margin-bottom:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.product h3{color:var(--navy)}
-.brand{font-size:11px;letter-spacing:1px;color:#ad832f;font-weight:bold}
-.price{font-size:22px;color:#a47b25;font-weight:900}
-input,select,textarea{
- width:100%;padding:13px;margin:7px 0 14px;
- border:1px solid #dce1ea;border-radius:8px;
- font-size:15px;background:white;color:var(--text);
+
+.hero h1 {
+  font-size: clamp(32px,6vw,52px);
+  margin: 15px 0;
 }
-input:focus,select:focus,textarea:focus{outline:2px solid #d6ad5570}
-label{font-weight:bold;font-size:14px;color:#263650}
-.status{
- padding:14px;background:#f0f4f9;border:1px solid #e5eaf1;
- border-radius:9px;margin:12px 0;overflow-wrap:anywhere;
+
+.hero h1 span {
+  color: var(--gold);
 }
-.status button{margin:5px 5px 5px 0}
-.hidden{display:none!important}
-#message{
- position:sticky;top:0;z-index:20;padding:13px;
- text-align:center;background:#fff2ce;color:#59410c;
- display:none;font-weight:bold;
+
+.hero p {
+  max-width: 750px;
+  margin: auto;
+  color: #d5dfec;
 }
-.feature{
- background:linear-gradient(120deg,#08152b,#17365d);
- color:white;padding:28px;border-radius:16px;margin:30px 0;text-align:center;
+
+.btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 12px 20px;
+  margin: 20px 5px;
+  border: 0;
+  border-radius: 7px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
 }
-.feature h2{color:var(--gold)}
-.feature p{color:#d8e0ed}
-.form-note{font-size:12px;color:#778399}
-footer{
- background:var(--navy);color:white;text-align:center;
- padding:40px 20px;border-top:3px solid var(--gold);
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 45px 20px;
 }
-footer p{color:var(--muted);font-size:13px}
-.footer-links{color:var(--gold);font-size:13px}
-footer a{color:var(--gold2);text-decoration:none}
-hr{border:0;border-top:1px solid #e5e9f0;margin:24px 0}
-.contact{margin:18px 0;line-height:2}
-@media(max-width:650px){
- header{padding:16px 18px}
- nav{gap:12px}
- nav a{font-size:12px}
- .hero{padding:60px 20px;min-height:350px}
- .trust{padding:17px 8px;gap:5px}
- .trust strong{font-size:11px}
- .trust span{font-size:10px}
- .panel{padding:17px}
- main{margin:28px auto}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.section-title h2 {
+  color: var(--navy);
+}
+
+.features,
+.products-grid,
+.sellers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 18px;
+}
+
+.feature,
+.panel,
+.product-card,
+.seller-card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px #0000000b;
+}
+
+.feature {
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 32px;
+}
+
+.product-card {
+  padding: 15px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-info h3 {
+  color: var(--navy);
+}
+
+.price {
+  color: #a67b1d;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d5dce6;
+  border-radius: 7px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+.status {
+  background: #f0f3f8;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.danger {
+  background: #d94848;
+  color: white;
+}
+
+.contact-section {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.contact-section a {
+  color: var(--gold);
+}
+
+footer {
+  background: #050e1d;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+@media(max-width:650px) {
+  .header-content {
+    justify-content: center;
+  }
+  nav {
+    justify-content: center;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="message"></div>
-
 <header>
- <div class="logo">✦ DIGITAL <span>AFRICA</span></div>
-
- <nav>
-  <a href="#accueil">Accueil</a>
-  <a href="#boutique">Boutique</a>
-  <a href="#vendeur">Vendeurs</a>
-  <a href="#compte">Mon compte</a>
- </nav>
-
- <button id="headerAccount" onclick="goAccount()">Connexion</button>
+<div class="header-content">
+  <div class="logo">✦ DIGITAL AFRICA</div>
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#boutique">Boutique</a>
+    <a href="#vendeurs">Vendeurs</a>
+    <a href="#compte">Mon compte</a>
+    <a href="#connexion" id="navConnexion">Connexion</a>
+  </nav>
+</div>
 </header>
-
-<div class="hero" id="accueil">
- <div class="hero-content">
-  <div class="hero-mark">✦ L'INNOVATION AFRICAINE</div>
-  <h1>Le numérique africain<br><span class="gold">à portée de main</span></h1>
-  <p>
-   Achetez, vendez et développez vos activités avec une
-   marketplace dédiée aux produits numériques.
-   Le talent africain mérite une vitrine mondiale.
-  </p>
-  <div class="hero-actions">
-   <button onclick="goTo('boutique')">Découvrir la boutique</button>
-   <button class="outline" onclick="goTo('vendeur')">Devenir vendeur</button>
-  </div>
- </div>
-</div>
-
-<div class="trust">
- <div><strong>✦ Plateforme africaine</strong><span>Une vitrine pour les talents</span></div>
- <div><strong>◆ Paiements en FCFA</strong><span>Orange Money • MTN • Wave</span></div>
- <div><strong>✓ Produits vérifiés</strong><span>Validation avant publication</span></div>
-</div>
 
 <main>
 
-<section>
- <div class="section-heading">
-  <h2>Explorez nos univers</h2>
-  <p>Des solutions numériques pour vos projets.</p>
- </div>
-
- <div class="category-grid">
-  <div class="category"><div class="symbol">📚</div><strong>E-books et livres</strong><small>Lecture et savoir</small></div>
-  <div class="category"><div class="symbol">🎓</div><strong>Formations</strong><small>Apprendre et progresser</small></div>
-  <div class="category"><div class="symbol">💻</div><strong>Logiciels</strong><small>Outils numériques</small></div>
-  <div class="category"><div class="symbol">🎨</div><strong>Graphisme</strong><small>Créativité et design</small></div>
-  <div class="category"><div class="symbol">📄</div><strong>Documents</strong><small>Modèles professionnels</small></div>
-  <div class="category"><div class="symbol">🌍</div><strong>Autres produits</strong><small>Découvrez nos offres</small></div>
- </div>
+<section class="hero" id="accueil">
+  <div class="hero-label">✦ L'INNOVATION AFRICAINE</div>
+  <h1>Le numérique africain<br><span>à portée de main</span></h1>
+  <p>
+    Achetez, vendez et développez vos activités
+    avec une marketplace dédiée aux produits numériques.
+    Le talent africain mérite une vitrine mondiale.
+  </p>
+  <a href="#boutique" class="btn">Découvrir la boutique</a>
+  <a href="#vendeurs" class="btn">Devenir vendeur</a>
 </section>
 
-<section id="boutique">
- <div class="section-heading">
-  <h2>La boutique</h2>
-  <p>Découvrez les produits numériques proposés par nos vendeurs.</p>
- </div>
-
- <div class="search-box">
-  <input id="search" placeholder="⌕ Rechercher un produit..." oninput="renderProducts()">
- </div>
-
- <div id="products" class="grid">Chargement des produits...</div>
-</section>
-
-<div class="feature">
- <h2>Votre talent a sa place ici</h2>
- <p>Vous avez une formation, un e-book, un logiciel ou une création numérique à vendre ?</p>
- <button onclick="goTo('vendeur')">Rejoindre les vendeurs</button>
-</div>
-
-<section id="compte">
- <div class="section-heading">
-  <h2>Votre espace personnel</h2>
-  <p>Connectez-vous ou créez votre compte DIGITAL AFRICA.</p>
- </div>
-
- <div class="panel">
-
-  <div id="authForms">
-   <h3>Créer un compte</h3>
-
-   <form id="signupForm">
-    <label>Nom complet</label>
-    <input id="signupName" required placeholder="Votre nom">
-
-    <label>Adresse e-mail</label>
-    <input id="signupEmail" type="email" required placeholder="Votre e-mail">
-
-    <label>Mot de passe</label>
-    <input id="signupPassword" type="password" minlength="8" required placeholder="8 caractères minimum">
-
-    <p class="form-note">Choisissez un mot de passe sécurisé.</p>
-    <button type="submit">Créer mon compte</button>
-   </form>
-
-   <hr>
-
-   <h3>Déjà membre ? Connectez-vous</h3>
-
-   <form id="loginForm">
-    <label>Adresse e-mail</label>
-    <input id="loginEmail" type="email" required placeholder="Votre e-mail">
-
-    <label>Mot de passe</label>
-    <input id="loginPassword" type="password" required placeholder="Votre mot de passe">
-
-    <button type="submit">Se connecter</button>
-   </form>
+<section class="container">
+  <div class="section-title">
+    <h2>Pourquoi DIGITAL AFRICA ?</h2>
+    <p>Une plateforme conçue pour valoriser les talents africains.</p>
   </div>
 
-  <div id="userArea" class="hidden">
-   <h3>Bienvenue dans votre espace !</h3>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🌍</div>
+      <h3>Plateforme africaine</h3>
+      <p>Une vitrine pour les créateurs africains.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💳</div>
+      <h3>Paiements en FCFA</h3>
+      <p>Orange Money, MTN Money et Wave.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🛍️</div>
+      <h3>Boutique numérique</h3>
+      <p>Découvrez des produits numériques.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🤝</div>
+      <h3>Multi-vendeurs</h3>
+      <p>Développez votre propre boutique.</p>
+    </div>
+  </div>
+</section>
 
-   <div class="status">
-    E-mail : <strong id="userEmail"></strong><br>
-    Nom : <strong id="userName"></strong><br>
-    Rôle : <strong id="userRole"></strong>
-   </div>
+<section class="container" id="boutique">
+  <div class="section-title">
+    <h2>✦ Notre boutique</h2>
+    <p>Découvrez les produits numériques disponibles.</p>
+  </div>
+  <div class="form-group">
+    <input type="search" id="productSearch"
+      placeholder="Rechercher un produit...">
+  </div>
+  <div id="productsList" class="products-grid">
+    <div class="status">Chargement des produits...</div>
+  </div>
+</section>
 
-   <button class="secondary" onclick="logout()">Déconnexion</button>
+<section class="container" id="vendeurs">
+  <div class="section-title">
+    <h2>Nos vendeurs</h2>
+    <p>Découvrez les entrepreneurs de DIGITAL AFRICA.</p>
+  </div>
+  <div id="sellersList" class="sellers-grid">
+    <div class="status">Chargement des vendeurs...</div>
+  </div>
+</section>
+
+<section class="container" id="connexion">
+  <div class="section-title">
+    <h2>Connexion à votre compte</h2>
+  </div>
+  <div class="panel">
+    <div class="form-group">
+      <label>Adresse e-mail</label>
+      <input type="email" id="loginEmail" placeholder="Votre e-mail">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" id="loginPassword" placeholder="Votre mot de passe">
+    </div>
+    <button class="btn" id="loginBtn">Se connecter</button>
+    <p>Pas encore de compte ? <a href="#inscription">Créer un compte</a></p>
+  </div>
+</section>
+
+<section class="container" id="inscription">
+  <div class="section-title">
+    <h2>Créer un compte</h2>
+  </div>
+  <div class="panel">
+    <div class="form-group">
+      <label>Nom complet</label>
+      <input type="text" id="registerName" placeholder="Votre nom">
+    </div>
+    <div class="form-group">
+      <label>Adresse e-mail</label>
+      <input type="email" id="registerEmail" placeholder="Votre e-mail">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" id="registerPassword" placeholder="Créer un mot de passe">
+    </div>
+    <button class="btn" id="registerBtn">Créer mon compte</button>
+  </div>
+</section>
+
+<section class="container" id="compte">
+  <div class="section-title">
+    <h2>Mon compte</h2>
+  </div>
+  <div id="accountArea" class="account-box">
+    <div class="status">Connectez-vous pour accéder à votre espace personnel.</div>
+  </div>
+</section>
+
+<section class="container" id="espaceVendeur">
+  <div class="section-title">
+    <h2>Espace vendeur</h2>
+    <p>Publiez vos produits numériques.</p>
+  </div>
+  <div class="panel">
+    <div class="form-group">
+      <label>Nom de votre boutique</label>
+      <input type="text" id="storeName">
+    </div>
+    <div class="form-group">
+      <label>Description de votre boutique</label>
+      <textarea id="storeDescription"></textarea>
+    </div>
+    <button class="btn" id="sellerRequestBtn">Devenir vendeur</button>
   </div>
 
- </div>
+  <div class="panel">
+    <h3>Publier un produit</h3>
+    <div class="form-group">
+      <label>Nom du produit</label>
+      <input type="text" id="productName">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="productDescription"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Prix en FCFA</label>
+      <input type="number" id="productPrice" min="0">
+    </div>
+    <div class="form-group">
+      <label>Image du produit (URL)</label>
+      <input type="url" id="productImage">
+    </div>
+    <div class="form-group">
+      <label>Fichier ou lien de livraison</label>
+      <input type="url" id="productFile">
+    </div>
+    <button class="btn" id="publishProductBtn">Publier le produit</button>
+  </div>
 </section>
 
-<section id="vendeur">
- <div class="section-heading">
-  <h2>Espace vendeur</h2>
-  <p>Développez votre activité avec DIGITAL AFRICA.</p>
- </div>
-
- <div class="panel">
-  <h3>Devenir vendeur</h3>
-  <p>Soumettez votre candidature. L'administration vérifiera votre demande.</p>
-
-  <form id="sellerForm">
-   <label>Nom de votre boutique</label>
-   <input id="storeName" required placeholder="Nom de votre boutique">
-
-   <label>Présentation de votre activité</label>
-   <textarea id="storeDescription" rows="3" placeholder="Présentez votre activité"></textarea>
-
-   <button type="submit">Envoyer ma candidature</button>
-  </form>
-
-  <div id="sellerStatus"></div>
- </div>
-
- <div class="panel hidden" id="sellerTools">
-  <h3>Publier un produit</h3>
-  <p>Chaque produit sera vérifié avant sa publication.</p>
-
-  <form id="productForm">
-   <label>Nom du produit</label>
-   <input id="productTitle" required placeholder="Nom du produit">
-
-   <label>Description</label>
-   <textarea id="productDescription" rows="3" placeholder="Description du produit"></textarea>
-
-   <label>Catégorie</label>
-   <select id="productCategory" required>
-    <option value="">Choisir une catégorie</option>
-    <option>E-books et livres</option>
-    <option>Formations</option>
-    <option>Logiciels</option>
-    <option>Graphisme et design</option>
-    <option>Documents professionnels</option>
-    <option>Autres produits numériques</option>
-   </select>
-
-   <label>Prix en FCFA</label>
-   <input id="productPrice" type="number" min="1" required placeholder="Exemple : 5000">
-
-   <button type="submit">Soumettre mon produit</button>
-  </form>
- </div>
+<section class="container" id="paiements">
+  <div class="section-title">
+    <h2>Paiements</h2>
+    <p>Des solutions de paiement adaptées à l'Afrique.</p>
+  </div>
+  <div class="features">
+    <div class="feature">🟠 Orange Money</div>
+    <div class="feature">🟡 MTN Money</div>
+    <div class="feature">🔵 Wave</div>
+  </div>
 </section>
 
-<section id="admin" class="hidden">
- <div class="section-heading">
-  <h2>Administration</h2>
-  <p>Gestion des vendeurs et des publications.</p>
- </div>
+<section class="container" id="administration">
+  <div class="section-title">
+    <h2>Administration</h2>
+  </div>
+  <div class="panel">
+    <h3>Gestion des vendeurs</h3>
+    <div id="adminSellers">
+      <div class="status">Chargement des demandes...</div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Gestion des produits</h3>
+    <div id="adminProducts">
+      <div class="status">Chargement des produits...</div>
+    </div>
+  </div>
+</section>
 
- <div class="panel">
-  <h3>Candidatures vendeurs</h3>
-  <div id="adminSellers"></div>
- </div>
-
- <div class="panel">
-  <h3>Produits à valider</h3>
-  <div id="adminProducts"></div>
- </div>
+<section class="contact-section" id="contact">
+  <h2>Contact DIGITAL AFRICA</h2>
+  <p>Une question ? Contactez-nous.</p>
+  <p>Téléphone / WhatsApp :
+    <a href="https://wa.me/2250544251966">05 44 25 19 66</a>
+  </p>
+  <p>Email : bonjourgracieux@gmail.com</p>
 </section>
 
 </main>
 
 <footer>
- <div class="logo">✦ DIGITAL AFRICA</div>
- <p>La marketplace numérique de l'Afrique</p>
-
- <div class="footer-links">
-  Orange Money • MTN Money • Wave
- </div>
-
- <div class="contact">
-  <p>Besoin d'aide ? Contactez notre administration.</p>
-  <p>
-   WhatsApp :
-   <a href="https://wa.me/2250544251966" target="_blank" rel="noopener">
-    05 44 25 19 66
-   </a>
-  </p>
-  <p>
-   E-mail :
-   <a href="mailto:bonjourgracieux@gmail.com">
-    bonjourgracieux@gmail.com
-   </a>
-  </p>
- </div>
-
- <p>© 2026 DIGITAL AFRICA. Tous droits réservés.</p>
- <p>Innovation • Confiance • Transparence</p>
-</footer>
+  <p>DIGITAL AFRICA © 2026</p>
+  <p>Innovation • Confiance • Développement</p>
+ </footer>
+ 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-"use strict";
-
-/* CONFIGURATION SUPABASE */
-
-const SUPABASE_URL =
-"https://mqyerongvzysnxlhzxfh.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_oOffU8kHG5Kzxnmu-bkUHg_q6gPiz34";
+const SUPABASE_URL = "https://mqyerongvzysnxlhzxfh.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_oOffU8kHG5Kzxnmu-bkUHg_q6gPiz34";
 
 const db = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
 let currentUser = null;
 let currentProfile = null;
-let products = [];
-let authReady = false;
-let authVersion = 0;
+let allProducts = [];
 
-/* OUTILS */
-
-function $(id){
- return document.getElementById(id);
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
-function goTo(id){
- $(id).scrollIntoView({behavior:"smooth"});
+function notify(message) {
+  alert(message);
 }
 
-function goAccount(){
- goTo("compte");
+function isAdmin() {
+  return currentProfile?.role === "admin";
 }
 
-function notify(message){
- const box=$("message");
- box.textContent=message;
- box.style.display="block";
- window.scrollTo({top:0,behavior:"smooth"});
+async function login() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
- clearTimeout(window.messageTimer);
-
- window.messageTimer=setTimeout(()=>{
-  box.style.display="none";
- },6000);
-}
-
-function money(value){
- return new Intl.NumberFormat("fr-FR").format(value)+" FCFA";
-}
-
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#039;"
- }[c]));
-}
-
-/* BOUTON DE CONNEXION DYNAMIQUE */
-
-function updateHeader(){
- const button=$("headerAccount");
-
- if(!currentUser){
-  button.textContent="Connexion";
- }else if(currentProfile?.role==="admin"){
-  button.textContent="Administration";
- }else{
-  button.textContent="Mon espace";
- }
-}
-
-/* BOUTIQUE */
-
-async function loadProducts(){
- const {data,error}=await db
-  .from("products")
-  .select("id,title,description,category,price,seller_id,status")
-  .eq("status","approved")
-  .order("created_at",{ascending:false});
-
- if(error){
-  $("products").textContent=
-   "Impossible de charger les produits. Réessayez plus tard.";
-  console.error(error);
-  return;
- }
-
- products=data||[];
- renderProducts();
-}
-
-function renderProducts(){
- const term=$("search").value.trim().toLowerCase();
-
- const list=products.filter(p=>
-  (p.title||"").toLowerCase().includes(term)||
-  (p.category||"").toLowerCase().includes(term)||
-  (p.description||"").toLowerCase().includes(term)
- );
-
- const container=$("products");
-
- if(!list.length){
-  container.innerHTML="<p>Aucun produit disponible pour le moment.</p>";
-  return;
- }
-
- container.innerHTML=list.map(p=>`
-  <article class="product">
-   <div class="brand">✦ DIGITAL AFRICA</div>
-   <h3>${escapeHTML(p.title)}</h3>
-   <p>${escapeHTML(p.description||"Produit numérique")}</p>
-   <p class="small">${escapeHTML(p.category||"")}</p>
-   <div class="price">${money(p.price)}</div>
-   <p class="small">Vendeur vérifié par la plateforme</p>
-  </article>
- `).join("");
-}
-
-/* PROFIL UTILISATEUR */
-
-async function loadProfile(){
- if(!currentUser)return;
-
- const userId=currentUser.id;
-
- const {data,error}=await db
-  .from("profiles")
-  .select("id,full_name,role")
-  .eq("id",userId)
-  .maybeSingle();
-
- if(error){
-  console.error("Profil :",error);
-  notify("Impossible de charger votre profil.");
-  return;
- }
-
- if(currentUser?.id!==userId)return;
-
- currentProfile=data;
-
- $("userName").textContent=
-  data?.full_name||
-  currentUser.user_metadata?.full_name||
-  "Membre";
-
- $("userRole").textContent=data?.role||"customer";
-
- const isAdmin=data?.role==="admin";
-
- $("admin").classList.toggle("hidden",!isAdmin);
-
- if(isAdmin){
-  $("sellerTools").classList.add("hidden");
-  await loadAdmin();
- }else{
-  const isSeller=await getSellerStatus();
-
-  if(currentUser?.id===userId){
-   $("sellerTools").classList.toggle("hidden",!isSeller);
-  }
- }
-
- updateHeader();
-}
-
-/* STATUT VENDEUR */
-
-async function getSellerStatus(){
- if(!currentUser)return false;
-
- const userId=currentUser.id;
-
- const {data,error}=await db
-  .from("seller_applications")
-  .select("status")
-  .eq("user_id",userId)
-  .order("created_at",{ascending:false})
-  .limit(1);
-
- if(error){
-  console.error(error);
-  $("sellerStatus").textContent=
-   "Impossible de vérifier votre candidature.";
-  return false;
- }
-
- const status=data?.[0]?.status;
-
- $("sellerStatus").textContent=
-  status==="approved"
-   ?"Votre boutique est approuvée. Vous pouvez publier des produits."
-   :status==="pending"
-   ?"Votre candidature est en attente de validation."
-   :status==="rejected"
-   ?"Votre candidature a été refusée. Contactez l'administration."
-   :"Vous pouvez soumettre votre candidature.";
-
- return status==="approved";
-}
-
-/* AFFICHAGE AUTHENTIFICATION */
-
-async function refreshAuth(){
- const version=++authVersion;
-
- const {data,error}=await db.auth.getSession();
-
- if(error){
-  console.error(error);
-  notify("Erreur de vérification de connexion.");
-  return;
- }
-
- if(version!==authVersion)return;
-
- currentUser=data.session?.user||null;
-
- $("authForms").classList.toggle("hidden",!!currentUser);
- $("userArea").classList.toggle("hidden",!currentUser);
-
- if(currentUser){
-  $("userEmail").textContent=currentUser.email||"";
-  await loadProfile();
- }else{
-  currentProfile=null;
-
-  $("userName").textContent="";
-  $("userRole").textContent="";
-
-  $("sellerTools").classList.add("hidden");
-  $("admin").classList.add("hidden");
-  $("sellerStatus").textContent="";
- }
-
- updateHeader();
- authReady=true;
-}
-
-/* INSCRIPTION */
-
-$("signupForm").addEventListener("submit",async e=>{
- e.preventDefault();
-
- const button=e.submitter;
- button.disabled=true;
-
- try{
-  const name=$("signupName").value.trim();
-  const email=$("signupEmail").value.trim();
-  const password=$("signupPassword").value;
-
-  if(password.length<8){
-   notify("Le mot de passe doit contenir au moins 8 caractères.");
-   return;
+  if (!email || !password) {
+    return notify("Remplis ton e-mail et ton mot de passe.");
   }
 
-  const {data,error}=await db.auth.signUp({
-   email,
-   password,
-   options:{
-    data:{full_name:name}
-   }
-  });
+  const { error } = await db.auth.signInWithPassword({ email, password });
 
-  if(error){
-   notify(error.message);
-   return;
-  }
-
-  if(data.session){
-   notify("Compte créé avec succès !");
-   await refreshAuth();
-  }else{
-   notify("Compte créé. Vérifiez votre e-mail pour confirmer votre inscription.");
-  }
-
- }catch(error){
-  console.error(error);
-  notify("Une erreur est survenue.");
- }finally{
-  button.disabled=false;
- }
-});
-
-/* CONNEXION */
-
-$("loginForm").addEventListener("submit",async e=>{
- e.preventDefault();
-
- const button=e.submitter;
- button.disabled=true;
-
- try{
-  const {error}=await db.auth.signInWithPassword({
-   email:$("loginEmail").value.trim(),
-   password:$("loginPassword").value
-  });
-
-  if(error){
-   notify(error.message);
-   return;
-  }
+  if (error) return notify("Erreur de connexion : " + error.message);
 
   notify("Connexion réussie !");
-  await refreshAuth();
-
- }catch(error){
-  console.error(error);
-  notify("Impossible de se connecter.");
- }finally{
-  button.disabled=false;
- }
-});
-
-/* DECONNEXION */
-
-async function logout(){
- const {error}=await db.auth.signOut();
-
- if(error){
-  notify(error.message);
-  return;
- }
-
- currentUser=null;
- currentProfile=null;
-
- await refreshAuth();
- notify("Vous êtes déconnecté.");
- goAccount();
 }
 
-/* CANDIDATURE VENDEUR */
+document.getElementById("loginBtn").addEventListener("click", login);
 
-$("sellerForm").addEventListener("submit",async e=>{
- e.preventDefault();
+async function register() {
+  const name = document.getElementById("registerName").value.trim();
+  const email = document.getElementById("registerEmail").value.trim();
+  const password = document.getElementById("registerPassword").value;
 
- if(!currentUser){
-  notify("Connectez-vous d'abord.");
-  goAccount();
-  return;
- }
-
- if(currentProfile?.role==="admin"){
-  notify("Le compte administrateur ne peut pas candidater comme vendeur ici.");
-  return;
- }
-
- const button=e.submitter;
- button.disabled=true;
-
- try{
-  const {data:existing,error:checkError}=await db
-   .from("seller_applications")
-   .select("id,status")
-   .eq("user_id",currentUser.id)
-   .limit(1);
-
-  if(checkError){
-   notify(checkError.message);
-   return;
+  if (!name || !email || password.length < 8) {
+    return notify("Indique ton nom, ton e-mail et un mot de passe de 8 caractères minimum.");
   }
 
-  if(existing?.length){
-   notify("Une candidature existe déjà pour ce compte.");
-   await getSellerStatus();
-   return;
+  const { data, error } = await db.auth.signUp({
+    email,
+    password,
+    options: { data: { full_name: name } }
+  });
+
+  if (error) return notify(error.message);
+
+  if (data.session) {
+    notify("Bienvenue sur DIGITAL AFRICA !");
+  } else {
+    notify("Inscription réussie. Vérifie ton e-mail pour confirmer ton compte.");
+  }
+}
+
+document.getElementById("registerBtn").addEventListener("click", register);
+
+async function loadProfile() {
+  if (!currentUser) return;
+
+  const { data, error } = await db
+    .from("profiles")
+    .select("id, full_name, role")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    return notify("Impossible de charger ton profil.");
   }
 
-  const {error}=await db
-   .from("seller_applications")
-   .insert({
-    user_id:currentUser.id,
-    store_name:$("storeName").value.trim(),
-    description:$("storeDescription").value.trim(),
-    status:"pending"
-   });
+  currentProfile = data;
+  renderAccount();
+  updateNavigation();
 
-  if(error){
-   notify(error.message);
-   return;
+  document.getElementById("espaceVendeur")
+    .classList.toggle("hidden", !currentUser);
+
+  document.getElementById("administration")
+    .classList.toggle("hidden", !isAdmin());
+
+  if (isAdmin()) {
+    loadAdminSellers();
+    loadAdminProducts();
+  }
+}
+
+function renderAccount() {
+  const area = document.getElementById("accountArea");
+
+  if (!currentUser) {
+    area.innerHTML = `
+      <div class="status">
+        Tu n'es pas connecté.
+        <a href="#connexion">Connecte-toi ici.</a>
+      </div>`;
+    return;
   }
 
-  notify("Candidature envoyée. Attendez la validation de l'administration.");
+  area.innerHTML = `
+    <div class="panel">
+      <h3>Bienvenue ${escapeHTML(currentProfile?.full_name || currentUser.email)}</h3>
+      <p>Email : ${escapeHTML(currentUser.email)}</p>
+      <p>Rôle : ${escapeHTML(currentProfile?.role || "membre")}</p>
+      <button class="btn danger" id="logoutBtn">Déconnexion</button>
+    </div>`;
 
-  $("sellerForm").reset();
-  await getSellerStatus();
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+}
 
- }catch(error){
-  console.error(error);
-  notify("Erreur pendant l'envoi de votre candidature.");
- }finally{
-  button.disabled=false;
- }
+function updateNavigation() {
+  const link = document.getElementById("navConnexion");
+
+  if (link) {
+    link.textContent = currentUser ? "Mon compte" : "Connexion";
+    link.href = currentUser ? "#compte" : "#connexion";
+  }
+}
+
+async function logout() {
+  const { error } = await db.auth.signOut();
+
+  if (error) return notify(error.message);
+
+  currentUser = null;
+  currentProfile = null;
+
+  renderAccount();
+  updateNavigation();
+
+  document.getElementById("espaceVendeur").classList.add("hidden");
+  document.getElementById("administration").classList.add("hidden");
+
+  notify("Tu es maintenant déconnecté.");
+}
+
+async function requestSeller() {
+  if (!currentUser) return notify("Connecte-toi avant de devenir vendeur.");
+
+  const storeName = document.getElementById("storeName").value.trim();
+  const description = document.getElementById("storeDescription").value.trim();
+
+  if (!storeName || !description) {
+    return notify("Remplis le nom et la description de ta boutique.");
+  }
+
+  const { error } = await db.from("seller_applications").insert({
+    user_id: currentUser.id,
+    store_name: storeName,
+    description,
+    status: "pending"
+  });
+
+  if (error) {
+    console.error(error);
+    return notify("Impossible d'envoyer la demande : " + error.message);
+  }
+
+  notify("Ta demande a été envoyée à l'administration !");
+}
+
+document.getElementById("sellerRequestBtn")
+  .addEventListener("click", requestSeller);
+
+async function publishProduct() {
+  if (!currentUser) return notify("Connecte-toi pour publier un produit.");
+
+  const name = document.getElementById("productName").value.trim();
+  const description = document.getElementById("productDescription").value.trim();
+  const price = Number(document.getElementById("productPrice").value);
+  const image = document.getElementById("productImage").value.trim();
+  const file = document.getElementById("productFile").value.trim();
+
+  if (!name || !description || !Number.isFinite(price) || price <= 0) {
+    return notify("Vérifie le nom, la description et le prix.");
+  }
+
+  if (!file) return notify("Ajoute un lien de livraison.");
+
+  const { error } = await db.from("products").insert({
+    seller_id: currentUser.id,
+    name,
+    description,
+    price,
+    image_url: image || null,
+    file_url: file,
+    status: "pending"
+  });
+
+  if (error) {
+    console.error(error);
+    return notify("Publication impossible : " + error.message);
+  }
+
+  notify("Produit envoyé pour validation par l'administration.");
+
+  ["productName", "productDescription", "productPrice",
+   "productImage", "productFile"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+}
+
+document.getElementById("publishProductBtn")
+  .addEventListener("click", publishProduct);
+
+async function loadProducts() {
+  const list = document.getElementById("productsList");
+
+  const { data, error } = await db
+    .from("products")
+    .select("*")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    list.innerHTML = '<div class="status">Impossible de charger les produits.</div>';
+    return;
+  }
+
+  allProducts = data || [];
+  displayProducts(allProducts);
+}
+
+function displayProducts(products) {
+  const list = document.getElementById("productsList");
+
+  if (!products.length) {
+    list.innerHTML = '<div class="status">Aucun produit disponible pour le moment.</div>';
+    return;
+  }
+
+  list.innerHTML = products.map(product => `
+    <div class="product-card">
+      <img src="${escapeHTML(product.image_url || "https://placehold.co/400x250?text=DIGITAL+AFRICA")}"
+        alt="${escapeHTML(product.name)}"
+        onerror="this.src='https://placehold.co/400x250?text=Produit'">
+      <div class="product-info">
+        <h3>${escapeHTML(product.name)}</h3>
+        <p>${escapeHTML(product.description)}</p>
+        <p class="price">${Number(product.price).toLocaleString("fr-FR")} FCFA</p>
+        <button class="btn" onclick="contactSeller('${String(product.id).replace(/[^a-zA-Z0-9_-]/g, "")}')">Commander</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+document.getElementById("productSearch").addEventListener("input", event => {
+  const query = event.target.value.toLowerCase();
+
+  displayProducts(allProducts.filter(product =>
+    String(product.name || "").toLowerCase().includes(query) ||
+    String(product.description || "").toLowerCase().includes(query)
+  ));
 });
 
-/* PUBLICATION PRODUIT */
+function contactSeller(productId) {
+  const product = allProducts.find(p => String(p.id) === String(productId));
+  if (!product) return;
 
-$("productForm").addEventListener("submit",async e=>{
- e.preventDefault();
+  const message = encodeURIComponent(
+    "Bonjour DIGITAL AFRICA, je souhaite commander : " + product.name
+  );
 
- if(!currentUser){
-  notify("Connectez-vous.");
-  goAccoun
+  window.open("https://wa.me/2250544251966?text=" + message, "_blank");
+}
+
+async function loadAdminSellers() {
+  if (!isAdmin()) return;
+
+  const area = document.getElementById("adminSellers");
+
+  const { data, error } = await db
+    .from("seller_applications")
+    .select("*")
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    area.innerHTML = '<div class="status">Erreur de chargement des vendeurs.</div>';
+    console.error(error);
+    return;
+  }
+
+  if (!data.length) {
+    area.innerHTML = '<div class="status">Aucune demande en attente.</div>';
+    return;
+  }
+
+  area.innerHTML = data.map(seller => `
+    <div class="status">
+      <strong>${escapeHTML(seller.store_name)}</strong>
+      <p>${escapeHTML(seller.description)}</p>
+      <button class="btn" onclick="approveSeller('${seller.id}')">Approuver</button>
+      <button class="btn danger" onclick="rejectSeller('${seller.id}')">Refuser</button>
+    </div>
+  `).join("");
+}
+
+async function approveSeller(id) {
+  if (!isAdmin()) return;
+  if (!confirm("Approuver cette demande de vendeur ?")) return;
+
+  const { error } = await db.from("seller_applications")
+    .update({ status: "approved" }).eq("id", id);
+
+  if (error) return notify(error.message);
+
+  notify("Demande approuvée.");
+  loadAdminSellers();
+}
+
+async function rejectSeller(id) {
+  if (!isAdmin()) return;
+  if (!confirm("Refuser cette demande ?")) return;
+
+  const { error } = await db.from("seller_applications")
+    .update({ status: "rejected" }).eq("id", id);
+
+  if (error) return notify(error.message);
+
+  notify("Demande refusée.");
+  loadAdminSellers();
+}
+
+async function loadAdminProducts() {
+  if (!isAdmin()) return;
+
+  const area = document.getElementById("adminProducts");
+
+  const { data, error } = await db.from("products")
+    .select("*").order("created_at", { ascending: false });
+
+  if (error) {
+    area.innerHTML = '<div class="status">Erreur de chargement des produits.</div>';
+    console.error(error);
+    return;
+  }
+
+  if (!data.length) {
+    area.innerHTML = '<div class="status">Aucun produit enregistré.</div>';
+    return;
+  }
+
+  area.innerHTML = data.map(product => `
+    <div class="status">
+      <strong>${escapeHTML(product.name)}</strong>
+      <p>${Number(product.price).toLocaleString("fr-FR")} FCFA</p>
+      <p>Statut : ${escapeHTML(product.status)}</p>
+      ${product.status === "pending" ? `
+        <button class="btn" onclick="approveProduct('${product.id}')">Approuver</button>
+        <button class="btn danger" onclick="rejectProduct('${product.id}')">Refuser</button>
+      ` : ""}
+    </div>
+  `).join("");
+}
+
+async function approveProduct(id) {
+  if (!isAdmin()) return;
+  if (!confirm("Publier ce produit dans la boutique ?")) return;
+
+  const { error } = await db.from("products")
+    .update({ status: "approved" }).eq("id", id);
+
+  if (error) return notify(error.message);
+
+  notify("Produit approuvé !");
+  loadAdminProducts();
+  loadProducts();
+}
+
+async function rejectProduct(id) {
+  if (!isAdmin()) return;
+  if (!confirm("Refuser ce produit ?")) return;
+
+  const { error } = await db.from("products")
+    .update({ status: "rejected" }).eq("id", id);
+
+  if (error) return notify(error.message);
+
+  notify("Produit refusé.");
+  loadAdminProducts();
+}
+
+async function initializeApp() {
+  const { data, error } = await db.auth.getSession();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  currentUser = data.session?.user || null;
+
+  if (currentUser) {
+    await loadProfile();
+  } else {
+    renderAccount();
+    updateNavigation();
+    document.getElementById("espaceVendeur").classList.add("hidden");
+    document.getElementById("administration").classList.add("hidden");
+  }
+
+  await loadProducts();
+}
+
+db.auth.onAuthStateChange((event, session) => {
+  currentUser = session?.user || null;
+
+  if (event === "INITIAL_SESSION") return;
+
+  if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+    setTimeout(() => loadProfile(), 0);
+  }
+
+  if (event === "SIGNED_OUT") {
+    currentProfile = null;
+    renderAccount();
+    updateNavigation();
+    document.getElementById("espaceVendeur").classList.add("hidden");
+    document.getElementById("administration").classList.add("hidden");
+  }
+});
+
+initializeApp();
+</script>
+</body>
+</html>
+    
