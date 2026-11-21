@@ -899,11 +899,12 @@ async function publishProduct() {
 }
 
 
+
 document.getElementById("productSearch").addEventListener("input", event => {
   const query = event.target.value.toLowerCase();
 
   displayProducts(allProducts.filter(product =>
-    String(product.name || "").toLowerCase().includes(query) ||
+    String(product.title || "").toLowerCase().includes(query) ||
     String(product.description || "").toLowerCase().includes(query)
   ));
 });
@@ -913,11 +914,15 @@ function contactSeller(productId) {
   if (!product) return;
 
   const message = encodeURIComponent(
-    "Bonjour DIGITAL AFRICA, je souhaite commander : " + product.name
+    "Bonjour DIGITAL AFRICA, je souhaite commander : " + product.title
   );
 
-  window.open("https://wa.me/2250544251966?text=" + message, "_blank");
+  window.open(
+    "https://wa.me/2250544251966?text=" + message,
+    "_blank"
+  );
 }
+
 
 async function loadAdminSellers() {
   if (!isAdmin()) return;
