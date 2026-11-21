@@ -606,8 +606,37 @@ async function logout() {
   notify("Tu es maintenant déconnecté.");
 }
 
+
 async function requestSeller() {
-  if (!currentUser) return notify("Connecte-toi avant de devenir vendeur.");
+  if (!currentUser) {
+    return notify("Connecte-toi avant de devenir vendeur.");
+  }
+
+  // Vérifier si une demande existe déjà
+  const { data: existing, error: checkError } = await db
+    .from("seller_applications")
+    .select("status, store_name")
+    .eq("user_id", currentUser.id)
+    .maybeSingle();
+
+  if (checkError) {
+    console.error(checkError);
+    return notify("Impossible de vérifier ton statut vendeur.");
+  }
+
+  if (existing) {
+    if (existing.status === "approved") {
+      return notify("Tu es déjà vendeur ! Ta boutique est approuvée.");
+    }
+
+    if (existing.status === "pending") {
+      return notify("Ta demande est déjà en attente de validation.");
+    }
+
+    if (existing.status === "rejected") {
+      return notify("Ta précédente demande a été refusée. Contacte l'administration.");
+    }
+  }
 
   const storeName = document.getElementById("storeName").value.trim();
   const description = document.getElementById("storeDescription").value.trim();
@@ -633,6 +662,7 @@ async function requestSeller() {
 
 document.getElementById("sellerRequestBtn")
   .addEventListener("click", requestSeller);
+
 
 
 async function publishProduct() {
