@@ -741,6 +741,7 @@ document.getElementById("sellerRequestBtn")
 
 
 
+
 async function publishProduct() {
   if (!currentUser) {
     return notify("Connecte-toi pour publier un produit.");
@@ -753,10 +754,7 @@ async function publishProduct() {
     .eq("status", "approved")
     .maybeSingle();
 
-  if (sellerError) {
-    console.error(sellerError);
-    return notify("Impossible de vérifier ton statut vendeur.");
-  }
+  if (sellerError) return notify("Erreur de vérification vendeur.");
 
   if (!seller) {
     return notify("Ta boutique doit être approuvée avant de publier.");
@@ -765,22 +763,28 @@ async function publishProduct() {
   const name = document.getElementById("productName").value.trim();
   const description = document.getElementById("productDescription").value.trim();
   const price = Number(document.getElementById("productPrice").value);
+  const image = document.getElementById("productImage").value.trim();
   const file = document.getElementById("productFile").value.trim();
 
   if (!name || !description || !Number.isFinite(price) || price <= 0) {
     return notify("Vérifie le nom, la description et le prix.");
   }
 
-  if (!file) {
-    return notify("Ajoute un lien de livraison.");
+  if (image && !/^https?:\/\//i.test(image)) {
+    return notify("L'image doit avoir une adresse HTTPS ou HTTP valide.");
+  }
+
+  if (!file || !/^https?:\/\//i.test(file)) {
+    return notify("Ajoute un lien de livraison valide.");
   }
 
   const { error } = await db.from("products").insert({
     seller_id: currentUser.id,
     title: name,
-    description: description,
+    description,
     category: "Autres",
-    price: price,
+    price,
+    image_url: image || null,
     file_path: file,
     status: "pending"
   });
@@ -799,10 +803,10 @@ async function publishProduct() {
     "productImage",
     "productFile"
   ].forEach(id => {
-    const field = document.getElementById(id);
-    if (field) field.value = "";
+    document.getElementById(id).value = "";
   });
 }
+
 
 document.getElementById("publishProductBtn")
   .addEventListener("click", publishProduct);
