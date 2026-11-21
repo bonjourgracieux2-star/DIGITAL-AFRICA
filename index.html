@@ -665,9 +665,26 @@ document.getElementById("sellerRequestBtn")
 
 
 
+
 async function publishProduct() {
   if (!currentUser) {
     return notify("Connecte-toi pour publier un produit.");
+  }
+
+  const { data: seller, error: sellerError } = await db
+    .from("seller_applications")
+    .select("store_name, status")
+    .eq("user_id", currentUser.id)
+    .eq("status", "approved")
+    .maybeSingle();
+
+  if (sellerError) {
+    console.error(sellerError);
+    return notify("Impossible de vérifier ton statut vendeur.");
+  }
+
+  if (!seller) {
+    return notify("Ta boutique doit être approuvée avant de publier.");
   }
 
   const name = document.getElementById("productName").value.trim();
@@ -698,16 +715,23 @@ async function publishProduct() {
     return notify("Publication impossible : " + error.message);
   }
 
-  notify("Produit envoyé pour validation par l'administration.");
+  notify("Produit envoyé pour validation par l'administration !");
 
-  ["productName", "productDescription", "productPrice",
-   "productImage", "productFile"].forEach(id => {
-    document.getElementById(id).value = "";
+  [
+    "productName",
+    "productDescription",
+    "productPrice",
+    "productImage",
+    "productFile"
+  ].forEach(id => {
+    const field = document.getElementById(id);
+    if (field) field.value = "";
   });
 }
 
 document.getElementById("publishProductBtn")
   .addEventListener("click", publishProduct);
+  
   
 
 async function loadProducts() {
