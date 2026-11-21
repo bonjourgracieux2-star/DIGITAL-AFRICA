@@ -66,27 +66,86 @@ nav a {
   font-size: 14px;
 }
 
+
 .hero {
-  background: linear-gradient(135deg,#08152b,#17365d);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 80% 30%, #315783 0, transparent 35%),
+    radial-gradient(circle at 15% 90%, #9b762d 0, transparent 28%),
+    linear-gradient(125deg, #061124, #102c50 60%, #08152b);
   color: white;
   text-align: center;
-  padding: 75px 20px;
+  padding: 90px 20px;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero::before {
+  content: "✦";
+  position: absolute;
+  z-index: -1;
+  right: 7%;
+  top: 5%;
+  font-size: clamp(180px, 35vw, 360px);
+  line-height: 1;
+  color: #d9ad45;
+  opacity: 0.10;
+}
+
+.hero::after {
+  content: "AFRICA";
+  position: absolute;
+  z-index: -1;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(65px, 15vw, 150px);
+  font-weight: 900;
+  letter-spacing: 12px;
+  color: white;
+  opacity: 0.045;
+}
+
+.hero-label {
+  color: #e9c66e;
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 13px;
 }
 
 .hero h1 {
-  font-size: clamp(32px,6vw,52px);
-  margin: 15px 0;
+  font-size: clamp(32px, 6vw, 58px);
+  line-height: 1.15;
+  margin: 22px 0;
 }
 
 .hero h1 span {
-  color: var(--gold);
+  color: #e5b94f;
 }
 
 .hero p {
-  max-width: 750px;
-  margin: auto;
-  color: #d5dfec;
+  max-width: 720px;
+  margin: 0 auto;
+  color: #e0e8f3;
+  font-size: 17px;
 }
+
+.hero .btn {
+  margin-top: 28px;
+}
+
+@media(max-width:650px) {
+  .hero {
+    padding: 65px 18px;
+    min-height: 390px;
+  }
+}
+  
 
 .btn {
   display: inline-block;
