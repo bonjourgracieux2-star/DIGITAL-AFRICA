@@ -1003,7 +1003,7 @@ async function loadAdminProducts() {
 
   area.innerHTML = data.map(product => `
     <div class="status">
-      <strong>${escapeHTML(product.name)}</strong>
+      <strong>${escapeHTML(product.title)}</strong>
       <p>${Number(product.price).toLocaleString("fr-FR")} FCFA</p>
       <p>Statut : ${escapeHTML(product.status)}</p>
       ${product.status === "pending" ? `
