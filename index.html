@@ -982,37 +982,49 @@ async function rejectSeller(id) {
   loadAdminSellers();
 }
 
+
 async function loadAdminProducts() {
   if (!isAdmin()) return;
 
   const area = document.getElementById("adminProducts");
+  if (!area) return;
 
-  const { data, error } = await db.from("products")
-    .select("*").order("created_at", { ascending: false });
+  const { data, error } = await db
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
 
   if (error) {
-    area.innerHTML = '<div class="status">Erreur de chargement des produits.</div>';
+    area.innerHTML =
+      '<div class="status">Erreur de chargement des produits.</div>';
     console.error(error);
     return;
   }
 
-  if (!data.length) {
-    area.innerHTML = '<div class="status">Aucun produit enregistré.</div>';
+  if (!data || data.length === 0) {
+    area.innerHTML =
+      '<div class="status">Aucun produit enregistré.</div>';
     return;
   }
 
   area.innerHTML = data.map(product => `
     <div class="status">
-      <strong>${escapeHTML(product.title)}</strong>
-      <p>${Number(product.price).toLocaleString("fr-FR")} FCFA</p>
-      <p>Statut : ${escapeHTML(product.status)}</p>
+      <strong>${escapeHTML(product.title || product.name || "Produit sans nom")}</strong>
+      <p>${Number(product.price || 0).toLocaleString("fr-FR")} FCFA</p>
+      <p>Statut : ${escapeHTML(product.status || "inconnu")}</p>
+
       ${product.status === "pending" ? `
-        <button class="btn" onclick="approveProduct('${product.id}')">Approuver</button>
-        <button class="btn danger" onclick="rejectProduct('${product.id}')">Refuser</button>
+        <button class="btn" onclick="approveProduct('${product.id}')">
+          Approuver
+        </button>
+        <button class="btn danger" onclick="rejectProduct('${product.id}')">
+          Refuser
+        </button>
       ` : ""}
     </div>
   `).join("");
-}
+  }
+  
 
 async function approveProduct(id) {
   if (!isAdmin()) return;
