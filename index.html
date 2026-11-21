@@ -813,24 +813,47 @@ document.getElementById("publishProductBtn")
   
   
 
+
 async function loadProducts() {
   const list = document.getElementById("productsList");
 
-  const { data, error } = await db
-    .from("products")
-    .select("*")
-    .eq("status", "approved")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error(error);
-    list.innerHTML = '<div class="status">Impossible de charger les produits.</div>';
+  if (!list) {
+    console.error("Élément productsList introuvable.");
     return;
   }
 
-  allProducts = data || [];
-  displayProducts(allProducts);
-}
+  list.innerHTML = '<div class="status">Chargement des produits...</div>';
+
+  try {
+    const { data, error } = await db
+      .from("products")
+      .select("*")
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Erreur Supabase :", error);
+      list.innerHTML =
+        '<div class="status">Impossible de charger les produits. Vérifie ta connexion.</div>';
+      return;
+    }
+
+    allProducts = data || [];
+
+    if (allProducts.length === 0) {
+      list.innerHTML =
+        '<div class="status">Aucun produit disponible pour le moment.</div>';
+      return;
+    }
+
+    displayProducts(allProducts);
+
+  } catch (error) {
+    console.error("Erreur inattendue :", error);
+    list.innerHTML =
+      '<div class="status">Une erreur est survenue lors du chargement.</div>';
+  }
+  
 
 
 async function publishProduct() {
