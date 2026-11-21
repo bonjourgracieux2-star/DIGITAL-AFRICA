@@ -832,28 +832,72 @@ async function loadProducts() {
   displayProducts(allProducts);
 }
 
-function displayProducts(products) {
-  const list = document.getElementById("productsList");
 
-  if (!products.length) {
-    list.innerHTML = '<div class="status">Aucun produit disponible pour le moment.</div>';
-    return;
+async function publishProduct() {
+  if (!currentUser) {
+    return notify("Connecte-toi pour publier un produit.");
   }
 
-  list.innerHTML = products.map(product => `
-    <div class="product-card">
-      <img src="${escapeHTML(product.image_url || "https://placehold.co/400x250?text=DIGITAL+AFRICA")}"
-        alt="${escapeHTML(product.name)}"
-        onerror="this.src='https://placehold.co/400x250?text=Produit'">
-      <div class="product-info">
-        <h3>${escapeHTML(product.name)}</h3>
-        <p>${escapeHTML(product.description)}</p>
-        <p class="price">${Number(product.price).toLocaleString("fr-FR")} FCFA</p>
-        <button class="btn" onclick="contactSeller('${String(product.id).replace(/[^a-zA-Z0-9_-]/g, "")}')">Commander</button>
-      </div>
-    </div>
-  `).join("");
+  const { data: seller, error: sellerError } = await db
+    .from("seller_applications")
+    .select("store_name, status")
+    .eq("user_id", currentUser.id)
+    .eq("status", "approved")
+    .maybeSingle();
+
+  if (sellerError) return notify("Erreur de vérification vendeur.");
+
+  if (!seller) {
+    return notify("Ta boutique doit être approuvée avant de publier.");
+  }
+
+  const name = document.getElementById("productName").value.trim();
+  const description = document.getElementById("productDescription").value.trim();
+  const price = Number(document.getElementById("productPrice").value);
+  const image = document.getElementById("productImage").value.trim();
+  const file = document.getElementById("productFile").value.trim();
+
+  if (!name || !description || !Number.isFinite(price) || price <= 0) {
+    return notify("Vérifie le nom, la description et le prix.");
+  }
+
+  if (image && !/^https?:\/\//i.test(image)) {
+    return notify("L'image doit avoir une adresse HTTPS ou HTTP valide.");
+  }
+
+  if (!file || !/^https?:\/\//i.test(file)) {
+    return notify("Ajoute un lien de livraison valide.");
+  }
+
+  const { error } = await db.from("products").insert({
+    seller_id: currentUser.id,
+    title: name,
+    description,
+    category: "Autres",
+    price,
+    image_url: image || null,
+    file_path: file,
+    status: "pending"
+  });
+
+  if (error) {
+    console.error(error);
+    return notify("Publication impossible : " + error.message);
+  }
+
+  notify("Produit envoyé pour validation par l'administration !");
+
+  [
+    "productName",
+    "productDescription",
+    "productPrice",
+    "productImage",
+    "productFile"
+  ].forEach(id => {
+    document.getElementById(id).value = "";
+  });
 }
+
 
 document.getElementById("productSearch").addEventListener("input", event => {
   const query = event.target.value.toLowerCase();
